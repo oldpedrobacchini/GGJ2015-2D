@@ -7,11 +7,10 @@ public class Game : MonoBehaviour {
 	public AudioClip finishLevel;
 
 	public GameObject redNode;
-	public GameObject yellowNode;
+	public GameObject greenNode;
 
 	List<float> avaliableX = new List<float>();
 	List<float> avaliableY = new List<float>();
-
 
 	void ReiniciarFase()
 	{
@@ -25,13 +24,14 @@ public class Game : MonoBehaviour {
 		}
 	}
 
-	//void Awake() {
-	//	DontDestroyOnLoad(transform.gameObject);
-	//}
+	void Awake() {
+		ReiniciarFase ();
+		DontDestroyOnLoad(transform.gameObject);
+	}
 
 	// Use this for initialization
 	void Start () {
-		ReiniciarFase ();
+
 	}
 
 	public Vector3 getAvaliablePosition(float radius)
@@ -73,7 +73,9 @@ public class Game : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.R))
+		if (Input.GetKeyDown (KeyCode.R)) {
+			ReiniciarFase();
 			Application.LoadLevel (Application.loadedLevel);
+		}
 	}
 }

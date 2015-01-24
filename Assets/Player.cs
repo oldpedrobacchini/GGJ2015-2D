@@ -42,7 +42,6 @@ public class Player : MonoBehaviour {
 	public void updateNodes()
 	{
 //		Debug.Log (nodes.Count+" "+numNodes);
-		//Debug.Log ("update node");
 		GameObject child = (GameObject)Instantiate(nodes[numNodes].gameObject);
 		child.transform.parent = gameObject.transform;
 		child.transform.localPosition = Vector3.zero;
