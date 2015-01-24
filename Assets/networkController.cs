@@ -102,7 +102,7 @@ public class networkController : MonoBehaviour {
 			GameObject[] goPlayers = GameObject.FindGameObjectsWithTag("Player");
 			foreach(GameObject gop in goPlayers)
 			{
-				NetworkPlayer gonp = gop.GetComponent<playerController>().netPlayer;
+				NetworkPlayer gonp = gop.GetComponent<Player>().netPlayer;
 				NetworkViewID gonvid = gop.GetComponent<NetworkView>().viewID;
 				
 				// only tell the requestor about others
@@ -151,6 +151,7 @@ public class networkController : MonoBehaviour {
 	[RPC]
 	void ClientUpdatePlayer(Vector3 pos, NetworkMessageInfo info)
 	{
+		Debug.Log ("ClientUpdatePlayer");
 		// a client is sending us a position update
 		// normally you would do a lot of bounds checking here
 		// but for this simple example, we'll just
@@ -169,6 +170,7 @@ public class networkController : MonoBehaviour {
 	[RPC]
 	void ServerUpdatePlayer(NetworkPlayer p, Vector3 pos)
 	{
+		Debug.Log ("ServerUpdatePlayer");
 		// the server is telling us to update a player
 		// again, normally you would do a lot of bounds
 		// checking here, but this is just a simple example
@@ -176,7 +178,7 @@ public class networkController : MonoBehaviour {
 		if(players.ContainsKey(p))
 		{
 			GameObject gop = (GameObject)players[p];
-			gop.GetComponent<playerController>().target = pos;
+			gop.GetComponent<MovimentPlayer1>().target = pos;
 		}
 		
 	}
@@ -212,13 +214,13 @@ public class networkController : MonoBehaviour {
 		
 		// set the remote player's target to its current location
 		// so that non-moving remote player don't move to the origin
-		newPlayer.GetComponent<playerController>().target = pos;
+		newPlayer.GetComponent<MovimentPlayer1>().target = pos;
 		
 		// most importantly, populate the NetworkPlayer
 		// structure with the data received from the player
 		// this will allow us to ignore updates from ourself
 		
-		newPlayer.GetComponent<playerController>().netPlayer = p;
+		newPlayer.GetComponent<Player>().netPlayer = p;
 		
 		// the local GameObject for any player is unknown to
 		// the server, so it can only send updates for NetworkPlayer
@@ -239,9 +241,8 @@ public class networkController : MonoBehaviour {
 				Debug.Log("Server accepted my connection request, I am real player now: " + newPlayerView.ToString());
 				
 				// because this is the local player, activate the character controller
-				
-				newPlayer.GetComponent<CharacterController>().enabled = true;
-				newPlayer.GetComponent<playerController>().isLocalPlayer = true;
+
+				newPlayer.GetComponent<MovimentPlayer1>().isLocalPlayer = true;
 				
 				// also, set the global localPlayerObject as a convenience variable
 				// to easily find the local player GameObject to send position updates
@@ -254,17 +255,16 @@ public class networkController : MonoBehaviour {
 				
 				// and finally, attach the main camera to me
 				
-				Camera.main.transform.parent = newPlayer.transform;
-				Camera.main.transform.localPosition = new Vector3(0,1,0);
+				//Camera.main.transform.parent = newPlayer.transform;
+				//Camera.main.transform.localPosition = new Vector3(0,1,0);
 				
 			} else {
 				
 				Debug.Log("Another player connected: " + newPlayerView.ToString());
 				
 				// because this in not the local player, deactivate the character controller
-				
-				newPlayer.GetComponent<CharacterController>().enabled = false;
-				newPlayer.GetComponent<playerController>().isLocalPlayer = false;
+
+				newPlayer.GetComponent<MovimentPlayer1>().isLocalPlayer = false;
 			}
 		}
 		

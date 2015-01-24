@@ -9,6 +9,9 @@ public class Player : MonoBehaviour {
 	public AudioClip rightSong;
 	public AudioClip wrongSong;
 
+	public Vector3 target = Vector3.zero;
+	public NetworkPlayer netPlayer;
+
 	public int getNumNodes()
 	{
 		return numNodes;
@@ -50,7 +53,7 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		updateNodes ();
-		Game game = FindObjectOfType<Game> ();
-		gameObject.transform.position = game.getAvaliablePosition (gameObject.transform.localScale.x);
+//		Game game = FindObjectOfType<Game> ();
+//		gameObject.transform.position = game.getAvaliablePosition (gameObject.transform.localScale.x);
 	}
 }

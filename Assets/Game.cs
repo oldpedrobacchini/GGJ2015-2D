@@ -6,13 +6,10 @@ public class Game : MonoBehaviour {
 
 	public AudioClip finishLevel;
 
-	public GameObject redNode;
-	public GameObject greenNode;
-
 	List<float> avaliableX = new List<float>();
 	List<float> avaliableY = new List<float>();
 
-	void ReiniciarFase()
+	void ResetData()
 	{
 		avaliableX.Clear ();
 		avaliableY.Clear ();
@@ -25,7 +22,7 @@ public class Game : MonoBehaviour {
 	}
 
 	void Awake() {
-		ReiniciarFase ();
+		ResetData ();
 		DontDestroyOnLoad(transform.gameObject);
 	}
 
@@ -74,7 +71,7 @@ public class Game : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.R)) {
-			ReiniciarFase();
+			ResetData();
 			Application.LoadLevel (Application.loadedLevel);
 		}
 	}
