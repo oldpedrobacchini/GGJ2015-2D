@@ -19,7 +19,6 @@ public class LastSpot : MonoBehaviour {
 		}
 		gameObject.transform.position = game.getAvaliablePosition (gameObject.transform.localScale.x);
 
-
 		for (int i=0; i<numRedNode; i++) {
 			GameObject node = (GameObject) Instantiate (redNode);
 			node.transform.position = game.getAvaliablePosition(node.transform.localScale.x);
@@ -31,7 +30,7 @@ public class LastSpot : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-//		Debug.Log ("trigger");
+		Debug.Log ("trigger");
 		Player p = other.transform.parent.gameObject.GetComponent<Player> ();
 		if (p.getNumNodes () == 3) {
 			Game game = FindObjectOfType<Game>();

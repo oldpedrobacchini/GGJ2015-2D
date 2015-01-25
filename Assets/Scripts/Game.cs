@@ -2,26 +2,30 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
 public class Game : MonoBehaviour {
 
 	public AudioClip finishLevel;
 
-	List<float> avaliableX = new List<float>();
-	List<float> avaliableY = new List<float>();
+	List<Vector2> avaliablePositons = new List<Vector2>();
 
+	public int limiteX = 24;
+	public int limiteY = 12;
 
+	private string countdown = "";   
 
+	private bool showCountdown = false;
 
 	public void ResetData()
 	{
-		avaliableX.Clear ();
-		avaliableY.Clear ();
-		for (float i=-24.0f; i<=24.0f; i+=0.1f) {
-			avaliableX.Add(i);
+//		Debug.Log ("reset");
+		avaliablePositons.Clear();
+		for (int i=limiteX; i>=-limiteX; i--) {
+			for (int j=limiteY; j>=-limiteY; j--) {
+				avaliablePositons.Add(new Vector2(i,j));
+			}
 		}
-		for (float i=-12.0f; i<=12.0f; i+=0.1f) {
-			avaliableY.Add(i);
-		}
+		//Debug.Log (avaliablePositons.Count);
 	}
 
 	void Awake() {
@@ -31,47 +35,91 @@ public class Game : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		StartCoroutine (getReady ());
+	}
+	
+	// call this function to display countdown
+	IEnumerator getReady ()    
+	{
+		showCountdown = true;    
+		
+		countdown = "3";    
+		yield return new WaitForSeconds(1.0f);
+		
+		countdown = "2";    
+		yield return new WaitForSeconds(1.0f);
+		
+		countdown = "1";    
+		yield return new WaitForSeconds(1.0f);
+		
+		countdown = "GO";    
+		yield return new WaitForSeconds(1.0f);
+		
+		showCountdown = false;
+		countdown = "";  
 	}
 
 	public Vector3 getAvaliablePosition(float radius)
 	{
-//		for (int i=0; i<avaliableX.Count; i++)
-//			Debug.Log (avaliableX [i]);
 
-		return new Vector3 (getAvaliable(ref avaliableX,radius), getAvaliable(ref avaliableY,radius), 0);
-	}
-
-	float getAvaliable(ref List<float> avaliable, float radius){
 //		Debug.Log (avaliable.Count);
-		int newPostionAvaliable = Random.Range (0, avaliable.Count - 1);
+		int newPostionAvaliable = Random.Range (0, avaliablePositons.Count - 1);
+		
 //		Debug.Log (newPostionAvaliable);
-		float newAvaliable = avaliable[newPostionAvaliable];
+		Vector2 newAvaliable = avaliablePositons[newPostionAvaliable];
 		
-		int remove = ((int)(radius/2))+1;
+		int remove = (int) Mathf.Ceil(radius/10.0f);
 		
-		int startRemove = newPostionAvaliable - remove;
-		if (startRemove < 0)
-			startRemove = 0;
+		int startRow = ((int)newAvaliable.x - remove);
+		if (startRow < -limiteX)
+			startRow = -limiteX;
 		
-		int rangeRemove = remove * 2;
-		if (startRemove + rangeRemove > avaliable.Count)
-			rangeRemove = avaliable.Count - startRemove;
+		int endRow = ((int)newAvaliable.x + remove);
+		if (endRow > limiteX)
+			endRow = limiteX;
 		
-//		Debug.Log (avaliable.Count);
-//		Debug.Log (radius);
-//		Debug.Log (remove);
-		
-		avaliable.RemoveRange (startRemove, rangeRemove);
-		
-//		Debug.Log (avaliable.Count);
-//		Debug.Log ("///////////////////////////////////////");
-//		for (int i=0; i<avaliableX.Count; i++)
-//			Debug.Log (avaliableX [i]);
-		
-		return newAvaliable;
+		while(startRow<=endRow)
+		{
+			int startCol = ((int)newAvaliable.y - remove);
+			if (startCol < -limiteY)
+				startCol = -limiteY;
+			
+			int endCol = ((int)newAvaliable.y + remove);
+			if (endCol > limiteY)
+				endCol = limiteY;
+			
+			while(startCol<=endCol)
+			{
+				Vector2 delete = new Vector2(startRow,startCol);
+				if(!avaliablePositons.Remove(delete))
+				{
+					//Debug.LogError("Erro ao remover o item central");
+					//Debug.Log (remove);
+					//Debug.Log (newAvaliable.x + " " + newAvaliable.y);
+					//Debug.Log (startRow+","+startCol);
+					//Debug.Log ("//////");
+				}
+				startCol++;
+			}
+			startRow++;
+		}
+
+		return new Vector3 (newAvaliable.x,newAvaliable.y, 0);
 	}
-	
+
+	void OnGUI ()
+	{
+		if (showCountdown)
+		{    
+			GUI.skin.label.fontSize = 60;
+			// display countdown    
+			GUI.color = Color.black;  
+
+			GUI.Label(new Rect (Screen.width / 2 - 90, Screen.height / 2, 180, 140), countdown);
+		}    
+	}
+
+
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.R)) {

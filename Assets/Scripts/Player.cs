@@ -56,6 +56,6 @@ public class Player : MonoBehaviour {
 	void Start () {
 		updateNodes ();
 		Game game = FindObjectOfType<Game> ();
-		gameObject.transform.position = game.getAvaliablePosition (gameObject.transform.localScale.x);
+		gameObject.transform.position = game.getAvaliablePosition (gameObject.transform.GetChild(0).localScale.x);
 	}
 }
