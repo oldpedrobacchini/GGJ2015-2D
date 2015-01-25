@@ -138,7 +138,7 @@ public class LastSpot : MonoBehaviour {
 		if(tag == "Player1")
 			game.addPointPlayer2();
 		else if(tag == "Player2")
-			game.addPointPlayer2();
+			game.addPointPlayer1();
 
 		Application.LoadLevel (Application.loadedLevelName);
 	}
