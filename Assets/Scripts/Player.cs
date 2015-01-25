@@ -10,6 +10,9 @@ public class Player : MonoBehaviour {
 	public AudioClip wrongSong;
 	
 	public NetworkPlayer netPlayer;
+	public Color corNucleu;
+
+	public LastSpot lastSpot;
 
 	public int getNumNodes()
 	{
@@ -34,9 +37,7 @@ public class Player : MonoBehaviour {
 	{
 		numNodes -= 1;
 		if (numNodes == -1) {
-			Game game = FindObjectOfType<Game>();
-			game.ResetData();
-			Application.LoadLevel (Application.loadedLevelName);
+			lastSpot.Ideath(gameObject.tag);
 		}
 		else {
 			Destroy (destoyerChild);
@@ -50,12 +51,11 @@ public class Player : MonoBehaviour {
 		GameObject child = (GameObject)Instantiate(nodes[numNodes].gameObject);
 		child.transform.parent = gameObject.transform;
 		child.transform.localPosition = Vector3.zero;
+		child.GetComponentInChildren<Node>().changeColor (corNucleu);
 	}
 
 	// Use this for initialization
 	void Start () {
 		updateNodes ();
-		Game game = FindObjectOfType<Game> ();
-		gameObject.transform.position = game.getAvaliablePosition (gameObject.transform.GetChild(0).localScale.x);
 	}
 }

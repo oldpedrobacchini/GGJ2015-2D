@@ -1,9 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 
 public class Node : MonoBehaviour 
 {
+
+	public List<SpriteRenderer> nucleos = new List<SpriteRenderer>();
+	
+	public void changeColor(Color color)
+	{
+		foreach(SpriteRenderer nucleo in nucleos)
+		{
+			nucleo.color = color;
+		}
+	}
+
 	void OnTriggerEnter2D(Collider2D other) {
 		//Debug.Log ("trigger");
 		if (other.gameObject.tag == "yellow" || other.gameObject.tag == "red") {
