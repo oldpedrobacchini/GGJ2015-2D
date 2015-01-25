@@ -8,8 +8,7 @@ public class Player : MonoBehaviour {
 	public List<Node> nodes = new List<Node>();
 	public AudioClip rightSong;
 	public AudioClip wrongSong;
-
-	public Vector3 target = Vector3.zero;
+	
 	public NetworkPlayer netPlayer;
 
 	public int getNumNodes()

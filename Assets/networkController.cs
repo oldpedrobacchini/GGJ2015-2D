@@ -58,7 +58,6 @@ public class networkController : MonoBehaviour {
 				{
 					lastLocalPlayerPosition = localPlayerObject.transform.position;
 					networkView.RPC("ClientUpdatePlayer",RPCMode.Server,lastLocalPlayerPosition);
-			
 				}
 			}
 		}
@@ -178,7 +177,8 @@ public class networkController : MonoBehaviour {
 		if(players.ContainsKey(p))
 		{
 			GameObject gop = (GameObject)players[p];
-			gop.GetComponent<MovimentPlayer1>().target = pos;
+			//gop.GetComponent<MovimentPlayer1>().target = pos;
+			gop.GetComponent<MovimentPlayer1>().startMovimentServer(pos);
 		}
 		
 	}
@@ -214,7 +214,8 @@ public class networkController : MonoBehaviour {
 		
 		// set the remote player's target to its current location
 		// so that non-moving remote player don't move to the origin
-		newPlayer.GetComponent<MovimentPlayer1>().target = pos;
+		//newPlayer.GetComponent<MovimentPlayer1>().target = pos;
+		newPlayer.GetComponent<MovimentPlayer1>().startMovimentServer(pos);
 		
 		// most importantly, populate the NetworkPlayer
 		// structure with the data received from the player
@@ -236,6 +237,7 @@ public class networkController : MonoBehaviour {
 		
 		if(Network.isClient) 
 		{
+			Debug.Log(p.ipAddress+" Test "+LocalAddress);
 			if(p.ipAddress==LocalAddress)
 			{
 				Debug.Log("Server accepted my connection request, I am real player now: " + newPlayerView.ToString());
