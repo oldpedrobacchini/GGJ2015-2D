@@ -134,7 +134,7 @@ public class LastSpot : MonoBehaviour {
 
 	public void Ideath(string tag)
 	{
-		Game game = FindObjectOfType<Game>();
+		Game game = FindObjectOfType<Game> ();
 		if(tag == "Player1")
 			game.addPointPlayer2();
 		else if(tag == "Player2")
