@@ -3,8 +3,8 @@ using System.Collections;
 
 public class LastSpot : MonoBehaviour {
 
-	int numRedNode = 4;
-	int numGreenNode = 4;
+	public int numRedNode = 10;
+	public int numGreenNode = 10;
 
 	public GameObject redNode;
 	public GameObject greenNode;
@@ -34,6 +34,8 @@ public class LastSpot : MonoBehaviour {
 //		Debug.Log ("trigger");
 		Player p = other.transform.parent.gameObject.GetComponent<Player> ();
 		if (p.getNumNodes () == 3) {
+			Game game = FindObjectOfType<Game>();
+			game.ResetData();
 			Application.LoadLevel(Application.loadedLevel);
 		}
 	}

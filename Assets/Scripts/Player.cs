@@ -33,8 +33,11 @@ public class Player : MonoBehaviour {
 	public void removeNode(GameObject destoyerChild)
 	{
 		numNodes -= 1;
-		if (numNodes == -1)
+		if (numNodes == -1) {
+			Game game = FindObjectOfType<Game>();
+			game.ResetData();
 			Application.LoadLevel (Application.loadedLevelName);
+		}
 		else {
 			Destroy (destoyerChild);
 			updateNodes ();
@@ -52,7 +55,7 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		updateNodes ();
-//		Game game = FindObjectOfType<Game> ();
-//		gameObject.transform.position = game.getAvaliablePosition (gameObject.transform.localScale.x);
+		Game game = FindObjectOfType<Game> ();
+		gameObject.transform.position = game.getAvaliablePosition (gameObject.transform.localScale.x);
 	}
 }

@@ -9,7 +9,10 @@ public class Game : MonoBehaviour {
 	List<float> avaliableX = new List<float>();
 	List<float> avaliableY = new List<float>();
 
-	void ResetData()
+
+
+
+	public void ResetData()
 	{
 		avaliableX.Clear ();
 		avaliableY.Clear ();
@@ -40,8 +43,9 @@ public class Game : MonoBehaviour {
 	}
 
 	float getAvaliable(ref List<float> avaliable, float radius){
-		
+//		Debug.Log (avaliable.Count);
 		int newPostionAvaliable = Random.Range (0, avaliable.Count - 1);
+//		Debug.Log (newPostionAvaliable);
 		float newAvaliable = avaliable[newPostionAvaliable];
 		
 		int remove = ((int)(radius/2))+1;
