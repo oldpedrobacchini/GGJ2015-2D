@@ -18,7 +18,8 @@ public class LastSpot : MonoBehaviour {
 	public GameObject player2;
 
 	public CanvasRenderer UICountdown;
-	public CanvasRenderer UIPoints;
+	public CanvasRenderer UIPointsP1;
+	public CanvasRenderer UIPointsP2;
 
 	List<Vector2> avaliablePositons = new List<Vector2>();
 
@@ -59,8 +60,10 @@ public class LastSpot : MonoBehaviour {
 			node.transform.position = getAvaliablePosition(node.transform.localScale.x);
 		}
 
-		//Seta o valor dos pontos iniciais
-		UIPoints.GetComponent<Text> ().text = game.getPointsPlayer1 () + " x " + game.getPointsPlayer2 ();
+		//Seta o valor dos pontos atuais dos jogadores
+		UIPointsP1.GetComponent<Text> ().text = game.getPointsPlayer1 ();
+		UIPointsP2.GetComponent<Text> ().text = game.getPointsPlayer2 ();
+
 
 		StartCoroutine (getReady());
 	}
@@ -163,9 +166,15 @@ public class LastSpot : MonoBehaviour {
 		if (p.getNumNodes () == 4) {
 
 			if(p.tag == "Player1")
+			{
 				game.addPointPlayer1();
+				Debug.Log ("addP1");
+			}
 			else if(p.tag == "Player2")
+			{
 				game.addPointPlayer2();
+				Debug.Log ("addP2");
+			}
 
 			StartCoroutine (finishLevel(p.tag));
 		}
