@@ -161,7 +161,6 @@ public class LastSpot : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		Debug.Log ("Collider");
 		Game game = FindObjectOfType<Game>();
 		Player p = other.transform.parent.gameObject.GetComponent<Player> ();
 		if (p.getNumNodes () == 4) {
