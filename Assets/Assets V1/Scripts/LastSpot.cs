@@ -98,10 +98,10 @@ public class LastSpot : MonoBehaviour {
 	public Vector3 getAvaliablePosition(float radius)
 	{
 		
-		//		Debug.Log (avaliable.Count);
+		//Debug.Log (avaliable.Count);
 		int newPostionAvaliable = Random.Range (0, avaliablePositons.Count - 1);
 		
-		//		Debug.Log (newPostionAvaliable);
+		//Debug.Log (newPostionAvaliable);
 		Vector2 newAvaliable = avaliablePositons[newPostionAvaliable];
 		
 		int remove = (int) Mathf.Ceil(radius/10.0f);
@@ -161,6 +161,7 @@ public class LastSpot : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
+		Debug.Log ("Collider");
 		Game game = FindObjectOfType<Game>();
 		Player p = other.transform.parent.gameObject.GetComponent<Player> ();
 		if (p.getNumNodes () == 4) {
@@ -168,12 +169,12 @@ public class LastSpot : MonoBehaviour {
 			if(p.tag == "Player1")
 			{
 				game.addPointPlayer1();
-				Debug.Log ("addP1");
+				collider2D.enabled = false;
 			}
 			else if(p.tag == "Player2")
 			{
 				game.addPointPlayer2();
-				Debug.Log ("addP2");
+				collider2D.enabled = false;
 			}
 
 			StartCoroutine (finishLevel(p.tag));
