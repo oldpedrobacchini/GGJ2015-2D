@@ -40,7 +40,7 @@ public class LastSpot : MonoBehaviour {
 			}
 		}
 		//Seta a posicao do save zone
-		gameObject.transform.position = getAvaliablePosition (gameObject.transform.localScale.x);
+		gameObject.transform.position = getAvaliablePosition (30);
 		GetComponent<UpDown> ().setinitialPosition (gameObject.transform.position);
 
 		//Seta a posicao do Jogador 1
