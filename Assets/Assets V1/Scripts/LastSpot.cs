@@ -13,6 +13,8 @@ public class LastSpot : MonoBehaviour {
 
 	public GameObject redNode;
 	public GameObject greenNode;
+	public GameObject animaScreenWinP1;
+	public GameObject animaScreenWinP2;
 
 	public GameObject player1;
 	public GameObject player2;
@@ -21,12 +23,15 @@ public class LastSpot : MonoBehaviour {
 	public CanvasRenderer UIPointsP1;
 	public CanvasRenderer UIPointsP2;
 
+
+
 	List<Vector2> avaliablePositons = new List<Vector2>();
 
 //	private Game game = null;
 
 	void Start()
 	{
+
 		//Busca o GameObject Game
 		Game game = FindObjectOfType<Game>();
 		//Se nao encontrar cria o objeto
@@ -150,11 +155,13 @@ public class LastSpot : MonoBehaviour {
 		{
 			game.addPointPlayer2();
 			StartCoroutine (finishLevel("Player2"));
+			animaScreenWinP2.gameObject.SetActive (true);
         }
 		else if(tag == "Player2")
         {
 			game.addPointPlayer1();
 			StartCoroutine (finishLevel("Player1"));
+			animaScreenWinP1.gameObject.SetActive (true);
 		}
 	
 		//Application.LoadLevel (Application.loadedLevelName);
@@ -169,11 +176,16 @@ public class LastSpot : MonoBehaviour {
 			{
 				game.addPointPlayer1();
 				collider2D.enabled = false;
+				Debug.LogError("Player1");
+				animaScreenWinP1.gameObject.SetActive (true);
+
 			}
 			else if(p.tag == "Player2")
 			{
 				game.addPointPlayer2();
 				collider2D.enabled = false;
+				animaScreenWinP2.gameObject.SetActive (true);
+
 			}
 
 			StartCoroutine (finishLevel(p.tag));
@@ -186,8 +198,8 @@ public class LastSpot : MonoBehaviour {
 		player2.GetComponent<MovimentPlayer> ().enabled = false;
 
 		UICountdown.transform.GetChild (0).gameObject.SetActive (false);
-		UICountdown.gameObject.SetActive (true);
-		int numeroPiscadas = 3;
+		UICountdown.gameObject.SetActive (false); //Desliga a tela que pisca
+		int numeroPiscadas = 4;
 		float tempoEntrePiscadas = 0.2f;
 
 		for (int i=0; i<numeroPiscadas; i++) {
@@ -195,6 +207,7 @@ public class LastSpot : MonoBehaviour {
 
 			if(tag == "Player1")
 				UICountdown.GetComponent<Image> ().color = new Color ((167f / 255f), 0 , 1f, 0.5f);
+				
 			else if (tag == "Player2")
 				UICountdown.GetComponent<Image> ().color = new Color (0, 1, (23f / 255f), 0.5f);
 
