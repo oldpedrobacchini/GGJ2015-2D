@@ -176,7 +176,6 @@ public class LastSpot : MonoBehaviour {
 			{
 				game.addPointPlayer1();
 				collider2D.enabled = false;
-				Debug.LogError("Player1");
 				animaScreenWinP1.gameObject.SetActive (true);
 
 			}
