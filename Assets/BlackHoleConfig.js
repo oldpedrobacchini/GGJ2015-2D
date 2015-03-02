@@ -16,50 +16,41 @@ public var animaScreenWinP2:GameObject;
 public var CameraTarget:Transform;
 
 
-function Start () {
-GanhouP1 = false;
-GanhouP2 = false;
+function Start () 
+{
+	GanhouP1 = false;
+	GanhouP2 = false;
+}
+
+function Update () 
+{
+	//if(GanhouP1==true)
+	//	AtracaoBlackHoleP1();
+	//if(GanhouP2==true)
+	//	AtracaoBlackHoleP2();
 
 }
 
-function Update () {
-	if(GanhouP1==true){
-			
-			AtracaoBlackHoleP1();
-			
-			
-		}
-	if(GanhouP2==true){
-			
-			AtracaoBlackHoleP2();
 
-		}
-
-	}
-
-
-function OnTriggerEnter2D(objColidiu: Collider2D) {
+function OnTriggerEnter2D(objColidiu: Collider2D) 
+{
 	ObjetoColididoBH = objColidiu.gameObject;
 	
-	if(AttractPlayerConfig.qdtParticleAtraidasP1 ==4 && ObjetoColididoBH.tag =='Player1'){
+	if(AttractPlayerConfig.qdtParticleAtraidasP1 ==4 && ObjetoColididoBH.tag =='Player1')
+	{
 		P1WIN();
-
-
 	}
 	
-	if(AttractPlayerConfig.qdtParticleAtraidasP2 ==4 && ObjetoColididoBH.tag =='Player2'){
+	if(AttractPlayerConfig.qdtParticleAtraidasP2 ==4 && ObjetoColididoBH.tag =='Player2')
+	{
 		P2WIN();
-
-
-	}
-
-	
+	}	
 }
 
 
 function P1WIN(){
 	GanhouP1 = true;
-	animaScreenWinP1.transform.active =true;
+	animaScreenWinP1.SetActive(true);
 	
 	var sinalBH1 = Instantiate (objSinalFinal, gameObject.transform.position, gameObject.transform.rotation);
 	(GameObject.Find("Player1").GetComponent( "MovimentPlayer1" ) as MonoBehaviour).enabled = false;
@@ -70,15 +61,15 @@ function P1WIN(){
 	yield WaitForSeconds (1);
 	Destroy(sinalBH1);
 	
-	print('Ganhou P1');
+//	print('Ganhou P1');
 }
 
 
 
 function P2WIN(){
 	GanhouP2 = true;
-	animaScreenWinP2.transform.active =true;
-	
+	animaScreenWinP1.SetActive(true);
+
 	var sinalBH2 = Instantiate (objSinalFinal, gameObject.transform.position, gameObject.transform.rotation);
 	(GameObject.Find("Player1").GetComponent( "MovimentPlayer1" ) as MonoBehaviour).enabled = false;
 	(GameObject.Find("Player2").GetComponent( "MovimentPlayer2" ) as MonoBehaviour).enabled = false;
@@ -88,7 +79,7 @@ function P2WIN(){
 	yield WaitForSeconds (1);
 	Destroy(sinalBH2);
 	
-	print('Ganhou P2');
+//	print('Ganhou P2');
 }
 
 

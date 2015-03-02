@@ -14,14 +14,14 @@ public var DistanceToPlayer :Vector2;
 
 
 
-function Start () {
-atrair = false;
-jaColidiu = false;
-
+function Start () 
+{
+	atrair = false;
+	jaColidiu = false;
 }
 
-function Update () {
-
+function Update () 
+{
 	var DistanceToPlayer = Vector2.Distance(ObjetoColidido.gameObject.transform.position, gameObject.transform.position);
 
 	if(atrair==true){
@@ -39,22 +39,20 @@ function Update () {
 	else{
 		atrair=false;
 	}
-	
-
-
 //objColidiu = player1
 //gameObject = particle
 }
 
-function OnTriggerEnter2D(objColidiu: Collider2D) {
+function OnTriggerEnter2D(objColidiu: Collider2D) 
+{
 //Player1
 	if (jaColidiu==false)
 	{
 		if (objColidiu.gameObject.tag == "Player1" && AttractPlayerConfig.qdtParticleAtraidasP1 < AttractPlayerConfig.qdtMaxParticleAtrair)
 		{
-			AttractPlayerConfig.qdtParticleAtraidasP1 =AttractPlayerConfig.qdtParticleAtraidasP1+1;
+			AttractPlayerConfig.qdtParticleAtraidasP1 = AttractPlayerConfig.qdtParticleAtraidasP1+1;
 			Suaviza=Random.Range(0.1,0.4);
-			print (AttractPlayerConfig.qdtParticleAtraidasP1);
+//			print (AttractPlayerConfig.qdtParticleAtraidasP1);
 
 				jaColidiu = true;
 				gameObject.tag = 'greenColididoP1';
@@ -71,7 +69,7 @@ function OnTriggerEnter2D(objColidiu: Collider2D) {
 		{
 			AttractPlayerConfig.qdtParticleAtraidasP2 =AttractPlayerConfig.qdtParticleAtraidasP2+1;
 			Suaviza=Random.Range(0.1,0.4);
-			print (AttractPlayerConfig.qdtParticleAtraidasP2);
+//			print (AttractPlayerConfig.qdtParticleAtraidasP2);
 			
 
 				jaColidiu = true;
@@ -83,18 +81,13 @@ function OnTriggerEnter2D(objColidiu: Collider2D) {
 				Destroy(sinal2);
 
 		}
-		
-		
-		}
-
+	}
 }
 
 
 
-function Atracao(){
-
+function Atracao()
+{
 	gameObject.transform.position.x = Mathf.SmoothDamp(gameObject.transform.position.x, ObjetoColidido.transform.position.x, speedMagnetic.x, Suaviza);
-	gameObject.transform.position.y = Mathf.SmoothDamp(gameObject.transform.position.y, ObjetoColidido.transform.position.y, speedMagnetic.y, Suaviza);
-
-	
+	gameObject.transform.position.y = Mathf.SmoothDamp(gameObject.transform.position.y, ObjetoColidido.transform.position.y, speedMagnetic.y, Suaviza);	
 }
