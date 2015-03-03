@@ -55,7 +55,7 @@ public class networkController : MonoBehaviour {
 				if(lastLocalPlayerPosition != localPlayerObject.transform.position)
 				{
 					lastLocalPlayerPosition = localPlayerObject.transform.position;
-					networkView.RPC("ClientUpdatePlayer",RPCMode.Server,lastLocalPlayerPosition);
+					GetComponent<NetworkView>().RPC("ClientUpdatePlayer",RPCMode.Server,lastLocalPlayerPosition);
 				}
 			}
 		}
@@ -73,7 +73,7 @@ public class networkController : MonoBehaviour {
 		// to the server before making the 
 		// player list request
 	
-		networkView.RPC("SendAllPlayers", RPCMode.Server);
+		GetComponent<NetworkView>().RPC("SendAllPlayers", RPCMode.Server);
 	}
 	
 	[RPC]
@@ -99,7 +99,7 @@ public class networkController : MonoBehaviour {
 						
 				if(gonp.ToString() != info.sender.ToString())
 				{
-					networkView.RPC("JoinPlayer", info.sender, gonvid, gop.transform.position, gonp);
+					GetComponent<NetworkView>().RPC("JoinPlayer", info.sender, gonvid, gop.transform.position, gonp);
 				}
 	    	}
 		}
@@ -141,7 +141,7 @@ public class networkController : MonoBehaviour {
 		
 		
 		NetworkPlayer p = info.sender;
-		networkView.RPC("ServerUpdatePlayer",RPCMode.Others, p, pos);
+		GetComponent<NetworkView>().RPC("ServerUpdatePlayer",RPCMode.Others, p, pos);
 	
 		// now update it for myself the server
 		
@@ -178,7 +178,7 @@ public class networkController : MonoBehaviour {
 			
 			// tell sender, others, and server to create the new player
 			
-			networkView.RPC("JoinPlayer", RPCMode.All, newViewID, Vector3.zero, p);
+			GetComponent<NetworkView>().RPC("JoinPlayer", RPCMode.All, newViewID, Vector3.zero, p);
 				
 			Debug.Log("Player " + newViewID.ToString() + " connected from " + p.ipAddress + ":" + p.port);
 			Debug.Log("There are now " + playerCount + " players.");
@@ -269,7 +269,7 @@ public class networkController : MonoBehaviour {
 			// we send this to everyone, including to
 			// ourself (the server) to clean-up
 			
-			networkView.RPC("DisconnectPlayer", RPCMode.All, player);
+			GetComponent<NetworkView>().RPC("DisconnectPlayer", RPCMode.All, player);
 			
 		}
     }

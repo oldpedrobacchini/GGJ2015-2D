@@ -46,7 +46,7 @@ public class GameClient : MonoBehaviour {
 				if(lastLocalPlayerPosition != localPlayerObject.transform.position)
 				{
 					lastLocalPlayerPosition = localPlayerObject.transform.position;
-					networkView.RPC("ClientUpdatePlayer",RPCMode.Server,lastLocalPlayerPosition);
+					GetComponent<NetworkView>().RPC("ClientUpdatePlayer",RPCMode.Server,lastLocalPlayerPosition);
 				}
 			}
 		}
@@ -60,7 +60,7 @@ public class GameClient : MonoBehaviour {
 	
 	void OnConnectedToServer()
 	{
-		networkView.RPC("SendAllPlayers", RPCMode.Server);
+		GetComponent<NetworkView>().RPC("SendAllPlayers", RPCMode.Server);
 	}
 	
 	[RPC]
@@ -86,7 +86,7 @@ public class GameClient : MonoBehaviour {
 				
 				if(gonp.ToString() != info.sender.ToString())
 				{
-					networkView.RPC("JoinPlayer", info.sender, gonvid, gop.transform.position, gonp);
+					GetComponent<NetworkView>().RPC("JoinPlayer", info.sender, gonvid, gop.transform.position, gonp);
 				}
 			}
 		}
@@ -110,7 +110,7 @@ public class GameClient : MonoBehaviour {
 		
 		
 		NetworkPlayer p = info.sender;
-		networkView.RPC("ServerUpdatePlayer",RPCMode.Others, p, pos);
+		GetComponent<NetworkView>().RPC("ServerUpdatePlayer",RPCMode.Others, p, pos);
 		
 		// now update it for myself the server
 		

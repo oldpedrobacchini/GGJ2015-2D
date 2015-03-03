@@ -31,8 +31,8 @@ public class Player : MonoBehaviour
 
 	public void addNode(GameObject newGreenNode)
 	{
-		audio.clip = rightSong;
-		audio.Play ();
+		GetComponent<AudioSource>().clip = rightSong;
+		GetComponent<AudioSource>().Play ();
 		greenNodes.Add(newGreenNode);
 		newGreenNode.gameObject.GetComponent<GreenNode>().Attract(this.gameObject);
 //		if (numNodes > Game.MAX_NUMBER_GREEN) 

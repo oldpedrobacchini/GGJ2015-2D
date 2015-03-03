@@ -11,7 +11,7 @@ public class CameraSmoothDamp : MonoBehaviour {
 
 	void Start()
 	{
-		_camZoom = camera.orthographicSize;
+		_camZoom = GetComponent<Camera>().orthographicSize;
 	}
 
 	// Update is called once per frame
@@ -25,9 +25,9 @@ public class CameraSmoothDamp : MonoBehaviour {
 			transform.position = new Vector3 (newCamPositionX, newCamPositionY, Camera.main.transform.position.z);
 		}
 
-		if(Mathf.Abs(camera.orthographicSize - _camZoom) > 0.1f)
+		if(Mathf.Abs(GetComponent<Camera>().orthographicSize - _camZoom) > 0.1f)
 		{
-			camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,_camZoom,ref speedMagneticCamSize, _smoothTime*Time.deltaTime);
+			GetComponent<Camera>().orthographicSize = Mathf.SmoothDamp(GetComponent<Camera>().orthographicSize,_camZoom,ref speedMagneticCamSize, _smoothTime*Time.deltaTime);
 		}
 	}
 

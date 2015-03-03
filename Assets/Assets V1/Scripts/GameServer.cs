@@ -27,7 +27,7 @@ public class GameServer : MonoBehaviour {
 
 	void OnConnectedToServer()
 	{
-		networkView.RPC("SendAllPlayers", RPCMode.Server);
+		GetComponent<NetworkView>().RPC("SendAllPlayers", RPCMode.Server);
 	}
 	
 	[RPC]
@@ -43,7 +43,7 @@ public class GameServer : MonoBehaviour {
 				
 				if(gonp.ToString() != info.sender.ToString())
 				{
-					networkView.RPC("JoinPlayer", info.sender, gonvid, gop.transform.position, gonp);
+					GetComponent<NetworkView>().RPC("JoinPlayer", info.sender, gonvid, gop.transform.position, gonp);
 				}
 			}
 		}
@@ -74,7 +74,7 @@ public class GameServer : MonoBehaviour {
 		Debug.Log ("ClientUpdatePlayer");
 
 		NetworkPlayer p = info.sender;
-		networkView.RPC("ServerUpdatePlayer",RPCMode.Others, p, pos);
+		GetComponent<NetworkView>().RPC("ServerUpdatePlayer",RPCMode.Others, p, pos);
 
 		ServerUpdatePlayer(p, pos);
 		
@@ -102,7 +102,7 @@ public class GameServer : MonoBehaviour {
 			
 			NetworkViewID newViewID = Network.AllocateViewID();
 			
-			networkView.RPC("JoinPlayer", RPCMode.All, newViewID, Vector3.zero, p);
+			GetComponent<NetworkView>().RPC("JoinPlayer", RPCMode.All, newViewID, Vector3.zero, p);
 			
 			Debug.Log("Player " + newViewID.ToString() + " connected from " + p.ipAddress + ":" + p.port);
 			Debug.Log("There are now " + playerCount + " players.");
@@ -131,7 +131,7 @@ public class GameServer : MonoBehaviour {
 			Debug.Log("Player " + player.ToString() + " disconnected.");
 			Debug.Log("There are now " + playerCount + " players.");
 			
-			networkView.RPC("DisconnectPlayer", RPCMode.All, player);
+			GetComponent<NetworkView>().RPC("DisconnectPlayer", RPCMode.All, player);
 		}
 	}
 	

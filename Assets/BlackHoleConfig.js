@@ -55,8 +55,8 @@ function P1WIN(){
 	var sinalBH1 = Instantiate (objSinalFinal, gameObject.transform.position, gameObject.transform.rotation);
 	(GameObject.Find("Player1").GetComponent( "MovimentPlayer1" ) as MonoBehaviour).enabled = false;
 	(GameObject.Find("Player2").GetComponent( "MovimentPlayer2" ) as MonoBehaviour).enabled = false;
-	GameObject.Find("Player1").collider2D.isTrigger=true;
-	GameObject.Find("Player2").collider2D.isTrigger=true;
+	GameObject.Find("Player1").GetComponent.<Collider2D>().isTrigger=true;
+	GameObject.Find("Player2").GetComponent.<Collider2D>().isTrigger=true;
 	
 	yield WaitForSeconds (1);
 	Destroy(sinalBH1);
@@ -73,8 +73,8 @@ function P2WIN(){
 	var sinalBH2 = Instantiate (objSinalFinal, gameObject.transform.position, gameObject.transform.rotation);
 	(GameObject.Find("Player1").GetComponent( "MovimentPlayer1" ) as MonoBehaviour).enabled = false;
 	(GameObject.Find("Player2").GetComponent( "MovimentPlayer2" ) as MonoBehaviour).enabled = false;
-	GameObject.Find("Player1").collider2D.isTrigger=true;
-	GameObject.Find("Player2").collider2D.isTrigger=true;
+	GameObject.Find("Player1").GetComponent.<Collider2D>().isTrigger=true;
+	GameObject.Find("Player2").GetComponent.<Collider2D>().isTrigger=true;
 	
 	yield WaitForSeconds (1);
 	Destroy(sinalBH2);
@@ -114,7 +114,7 @@ function AtracaoBlackHoleP1(){
 	
 	objCamera.transform.position.x = Mathf.SmoothDamp(objCamera.transform.position.x, gameObject.transform.position.x, speedMagneticCam.x, SuavizaCam*Time.deltaTime);
 	objCamera.transform.position.y = Mathf.SmoothDamp(objCamera.transform.position.y, gameObject.transform.position.y, speedMagneticCam.y, SuavizaCam*Time.deltaTime);
-	objCamera.camera.orthographicSize = Mathf.SmoothDamp(objCamera.camera.orthographicSize,11,speedMagneticCamSize, SuavizaCam*Time.deltaTime);
+	objCamera.GetComponent.<Camera>().orthographicSize = Mathf.SmoothDamp(objCamera.GetComponent.<Camera>().orthographicSize,11,speedMagneticCamSize, SuavizaCam*Time.deltaTime);
 
 	
 }
@@ -147,7 +147,7 @@ function AtracaoBlackHoleP2(){
 	
 	objCamera.transform.position.x = Mathf.SmoothDamp(objCamera.transform.position.x, gameObject.transform.position.x, speedMagneticCam.x, SuavizaCam*Time.deltaTime);
 	objCamera.transform.position.y = Mathf.SmoothDamp(objCamera.transform.position.y, gameObject.transform.position.y, speedMagneticCam.y, SuavizaCam*Time.deltaTime);
-	objCamera.camera.orthographicSize = Mathf.SmoothDamp(objCamera.camera.orthographicSize,11,speedMagneticCamSize, SuavizaCam*Time.deltaTime);
+	objCamera.GetComponent.<Camera>().orthographicSize = Mathf.SmoothDamp(objCamera.GetComponent.<Camera>().orthographicSize,11,speedMagneticCamSize, SuavizaCam*Time.deltaTime);
 	
 		
 	

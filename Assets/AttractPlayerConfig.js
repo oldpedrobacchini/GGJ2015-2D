@@ -42,12 +42,12 @@ function P1WIN_PLAYER()
 	(GameObject.Find("Player1").GetComponent( "MovimentPlayer1" ) as MonoBehaviour).enabled = false;
 	(GameObject.Find("Player2").GetComponent( "MovimentPlayer2" ) as MonoBehaviour).enabled = false;
 	
-	GameObject.Find("Player1").collider2D.isTrigger=true;
-	GameObject.Find("Player2").collider2D.isTrigger=true;
+	GameObject.Find("Player1").GetComponent.<Collider2D>().isTrigger=true;
+	GameObject.Find("Player2").GetComponent.<Collider2D>().isTrigger=true;
 
 	objCamera1.transform.position.x = Mathf.SmoothDamp(objCamera1.transform.position.x, GameObject.Find("Player1").transform.position.x, speedMagneticCam1.x, SuavizaCam1*Time.deltaTime);
 	objCamera1.transform.position.y = Mathf.SmoothDamp(objCamera1.transform.position.y, GameObject.Find("Player1").transform.position.y, speedMagneticCam1.y, SuavizaCam1*Time.deltaTime);
-	objCamera1.camera.orthographicSize = Mathf.SmoothDamp(objCamera1.camera.orthographicSize,11,speedMagneticCamSize1, SuavizaCam1*Time.deltaTime);
+	objCamera1.GetComponent.<Camera>().orthographicSize = Mathf.SmoothDamp(objCamera1.GetComponent.<Camera>().orthographicSize,11,speedMagneticCamSize1, SuavizaCam1*Time.deltaTime);
 }
 
 function P2WIN_PLAYER()
@@ -59,11 +59,11 @@ function P2WIN_PLAYER()
 	(GameObject.Find("Player1").GetComponent( "MovimentPlayer1" ) as MonoBehaviour).enabled = false;
 	(GameObject.Find("Player2").GetComponent( "MovimentPlayer2" ) as MonoBehaviour).enabled = false;
 	
-	GameObject.Find("Player1").collider2D.isTrigger=true;
-	GameObject.Find("Player2").collider2D.isTrigger=true;
+	GameObject.Find("Player1").GetComponent.<Collider2D>().isTrigger=true;
+	GameObject.Find("Player2").GetComponent.<Collider2D>().isTrigger=true;
 
 	objCamera1.transform.position.x = Mathf.SmoothDamp(objCamera1.transform.position.x, GameObject.Find("Player2").transform.position.x, speedMagneticCam1.x, SuavizaCam1*Time.deltaTime);
 	objCamera1.transform.position.y = Mathf.SmoothDamp(objCamera1.transform.position.y, GameObject.Find("Player2").transform.position.y, speedMagneticCam1.y, SuavizaCam1*Time.deltaTime);
-	objCamera1.camera.orthographicSize = Mathf.SmoothDamp(objCamera1.camera.orthographicSize,11,speedMagneticCamSize1, SuavizaCam1*Time.deltaTime);
+	objCamera1.GetComponent.<Camera>().orthographicSize = Mathf.SmoothDamp(objCamera1.GetComponent.<Camera>().orthographicSize,11,speedMagneticCamSize1, SuavizaCam1*Time.deltaTime);
 }
 
