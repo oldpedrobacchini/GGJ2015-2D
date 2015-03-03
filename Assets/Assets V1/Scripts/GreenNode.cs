@@ -15,12 +15,6 @@ public class GreenNode : MonoBehaviour
 		else
 			return true;
 	}
-
-	void Start()
-	{
-		GetComponent<UpDown> ().range = Random.Range (1.0f, 2.0f);
-		GetComponent<UpDown> ().velocity = Random.Range (1.0f, 2.0f);
-	}
 	
 	// Update is called once per frame
 	void Update () 

@@ -1,42 +1,45 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class LastSpot : MonoBehaviour 
-{	
+public class Match : MonoBehaviour 
+{
+
 	public int limiteX = 24;
 	public int limiteY = 12;
-
+	
 	public int numRedNode = 10;
 	public int numGreenNode = 10;
-
+	
 	public GameObject redNode;
 	public GameObject greenNode;
 	public GameObject animaScreenWinP1;
 	public GameObject animaScreenWinP2;
-
+	
 	public GameObject player1;
 	public GameObject player2;
 
+	public GameObject BlackHole;
+	
 	public CanvasRenderer UICountdown;
 	public CanvasRenderer UIPointsP1;
 	public CanvasRenderer UIPointsP2;
-
+	
 	float cameraSmoothTime = 10f;
 	
 	List<Vector2> avaliablePositons = new List<Vector2>();
-
-//	private Game game = null;
-
-	void Start()
+	
+	//	private Game game = null;
+	
+	void Awake()
 	{
 		//Busca o GameObject Game
 		Game game = FindObjectOfType<Game>();
 		//Se nao encontrar cria o objeto
 		if(game==null)
 			game = ((GameObject) Instantiate(Resources.Load("GamePrefab", typeof(GameObject)))).GetComponent<Game>();
-
+		
 		//Cria a lista de posicoes disponiveis para posicionar os elemntos do jogo
 		for (int i=limiteX; i>=-limiteX; i--) 
 		{
@@ -45,37 +48,38 @@ public class LastSpot : MonoBehaviour
 				avaliablePositons.Add(new Vector2(i,j));
 			}
 		}
-
-		//Seta a posicao do save zone
-		gameObject.transform.position = getAvaliablePosition (30);
-
+		
+		//Seta a posicao do black hole 
+		BlackHole.transform.position = getAvaliablePosition (40);
+		
 		//Seta a posicao do Jogador 1
 		player1.transform.position = getAvaliablePosition (25.0f);
 		//Seta a posicao do Jogador 2
 		player2.transform.position = getAvaliablePosition (25.0f);
-
+		
 		//Cria os nos vermelhos
 		for (int i=0; i<numRedNode; i++) 
 		{
 			GameObject node = (GameObject) Instantiate (redNode);
-			//Debug.Log(node.transform.GetChild(0).GetComponent<);
+			node.GetComponent<UpDown>().RandomMoviment();
 			node.transform.position = getAvaliablePosition(node.transform.localScale.x);
 		}
-
+		
 		//Cria os nos verdes
 		for (int i=0; i<numGreenNode; i++) 
 		{
 			GameObject node = (GameObject) Instantiate (greenNode);
+			node.GetComponent<UpDown>().RandomMoviment();
 			node.transform.position = getAvaliablePosition(node.transform.localScale.x);
 		}
-
+		
 		//Seta o valor dos pontos atuais dos jogadores
 		UIPointsP1.GetComponent<Text> ().text = game.getPointsPlayer1 ();
 		UIPointsP2.GetComponent<Text> ().text = game.getPointsPlayer2 ();
-
+		
 		StartCoroutine (getReady());
 	}
-
+	
 	// Chamar essa funcao para mostrar a contagem regressiva no comeco do jogo
 	IEnumerator getReady ()    
 	{	
@@ -90,12 +94,12 @@ public class LastSpot : MonoBehaviour
 		
 		UICountdown.GetComponentInChildren<Text> ().text = "GO!";    
 		yield return new WaitForSeconds(0.3f);
-
+		
 		UICountdown.gameObject.SetActive (false);
 		player1.GetComponent<MovimentPlayer> ().enabled = true;
 		player2.GetComponent<MovimentPlayer> ().enabled = true;
 	}
-
+	
 	// Update is called once per frame
 	void Update () 
 	{
@@ -104,7 +108,7 @@ public class LastSpot : MonoBehaviour
 			Application.LoadLevel (Application.loadedLevel);
 		}
 	}
-
+	
 	public Vector3 getAvaliablePosition(float radius)
 	{
 		
@@ -152,81 +156,43 @@ public class LastSpot : MonoBehaviour
 		
 		return new Vector3 (newAvaliable.x,newAvaliable.y, 0);
 	}
-
+	
 	public void Ideath(string tag)
 	{
 		Game game = FindObjectOfType<Game> ();
 		if(tag == "Player1")
 		{
 			game.addPointPlayer2();
-			StartCoroutine (finishLevel2("Player2"));
-			//animaScreenWinP2.gameObject.SetActive (true);
-        }
+			StartCoroutine (finishLevel("Player2"));
+		}
 		else if(tag == "Player2")
-        {
-			game.addPointPlayer1();
-			StartCoroutine (finishLevel2("Player1"));
-			//animaScreenWinP1.gameObject.SetActive (true);
-		}
-	
-		//Application.LoadLevel (Application.loadedLevelName);
-	}
-
-	void OnTriggerEnter2D(Collider2D other) 
-	{
-		if (other.gameObject.GetComponent<Player> () != null) 
 		{
-			Game game = FindObjectOfType<Game> ();
-			Player p = other.gameObject.GetComponent<Player> ();
-			if (p.getNumNodes () == 4) 
-			{
-				if (p.tag == "Player1") 
-				{
-					game.addPointPlayer1 ();
-					collider2D.enabled = false;
-					//animaScreenWinP1.gameObject.SetActive (true);
-				} else if (p.tag == "Player2") {
-					game.addPointPlayer2 ();
-					collider2D.enabled = false;
-					//animaScreenWinP2.gameObject.SetActive (true);
-				}
-				StartCoroutine (finishLevel2 (p.tag));
-			}
+			game.addPointPlayer1();
+			StartCoroutine (finishLevel("Player1"));
 		}
 	}
 
-	//TODO remover esse metodo
-	IEnumerator finishLevel(string tag)
+	public void finishMatch(string player)
 	{
-		player1.GetComponent<MovimentPlayer>().enabled = false;
-		player2.GetComponent<MovimentPlayer>().enabled = false;
-
-		UICountdown.transform.GetChild (0).gameObject.SetActive (false);
-		UICountdown.gameObject.SetActive (true); //Desliga a tela que pisca
-		int numeroPiscadas = 4;
-		float tempoEntrePiscadas = 0.2f;
-
-		for (int i=0; i<numeroPiscadas; i++) {
-			yield return new WaitForSeconds (tempoEntrePiscadas);
-
-			if(tag == "Player1")
-				UICountdown.GetComponent<Image> ().color = new Color ((167f / 255f), 0 , 1f, 0.5f);
-				
-			else if (tag == "Player2")
-				UICountdown.GetComponent<Image> ().color = new Color (0, 1, (23f / 255f), 0.5f);
-
-			yield return new WaitForSeconds (tempoEntrePiscadas);
-			UICountdown.GetComponent<Image> ().color = new Color (0, 0, 0, 0.25f);
+		Game game = FindObjectOfType<Game> ();
+		if (player == "Player1") 
+		{
+			game.addPointPlayer1 ();
+			collider2D.enabled = false;
+		} else if (player == "Player2") 
+		{
+			game.addPointPlayer2 ();
+			collider2D.enabled = false;
 		}
-		Application.LoadLevel(Application.loadedLevel);
+		StartCoroutine (finishLevel(player));
 	}
 
-	IEnumerator finishLevel2(string tag)
+	IEnumerator finishLevel(string tag)
 	{
 		//BlackHole Attract
 		player1.GetComponent<MovimentPlayer> ().enabled = false;
 		player2.GetComponent<MovimentPlayer> ().enabled = false;
-
+		
 		if (tag == "Player1") 
 		{
 			animaScreenWinP1.gameObject.SetActive (true);
@@ -237,9 +203,9 @@ public class LastSpot : MonoBehaviour
 			animaScreenWinP2.gameObject.SetActive (true);
 			Camera.main.GetComponent<CameraSmoothDamp>().goTo(player2.transform.position, cameraSmoothTime, 11);
 		}
-
+		
 		yield return new WaitForSeconds (2.0f);
-
+		
 		Application.LoadLevel(Application.loadedLevel);
 	}
 }

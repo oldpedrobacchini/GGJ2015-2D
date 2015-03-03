@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 	public NetworkPlayer netPlayer;
 	//public Color corNucleu;
 
-	public LastSpot lastSpot;
+	public Match match;
 
 	public GameObject redSinalPrefab;
 	public GameObject greenSinalPrefab;
@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
 		}
 		else
 		{
-			lastSpot.Ideath(gameObject.tag);
+			match.Ideath(gameObject.tag);
 		}
 
 //		numNodes -= 1;

@@ -17,6 +17,10 @@ public class UpDown : MonoBehaviour {
 	{
 		this.enabled = true;
 		initialPosition = transform.position;
+	}
+
+	public void RandomMoviment()
+	{
 		range = Random.Range (1.0f, 1.5f);
 		velocity = Random.Range (1.0f, 1.5f);
 	}
