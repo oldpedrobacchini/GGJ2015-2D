@@ -8,11 +8,6 @@ public class CameraSmoothDamp : MonoBehaviour {
 	Vector2 speedMagneticCam;
 	float speedMagneticCamSize;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-
 	// Update is called once per frame
 	void Update () 
 	{

@@ -23,7 +23,7 @@ public class LastSpot : MonoBehaviour
 	public CanvasRenderer UIPointsP1;
 	public CanvasRenderer UIPointsP2;
 
-	float CameraSmoothTime = 10f;
+	float cameraSmoothTime = 10f;
 	
 	List<Vector2> avaliablePositons = new List<Vector2>();
 
@@ -230,12 +230,12 @@ public class LastSpot : MonoBehaviour
 		if (tag == "Player1") 
 		{
 			animaScreenWinP1.gameObject.SetActive (true);
-			Camera.main.GetComponent<CameraSmoothDamp>().goTo(player1.transform.position, CameraSmoothTime);
+			Camera.main.GetComponent<CameraSmoothDamp>().goTo(player1.transform.position, cameraSmoothTime);
 		}
 		else if(tag == "Player2")
 		{
 			animaScreenWinP2.gameObject.SetActive (true);
-			Camera.main.GetComponent<CameraSmoothDamp>().goTo(player2.transform.position, CameraSmoothTime);
+			Camera.main.GetComponent<CameraSmoothDamp>().goTo(player2.transform.position, cameraSmoothTime);
 		}
 
 		yield return new WaitForSeconds (2.0f);

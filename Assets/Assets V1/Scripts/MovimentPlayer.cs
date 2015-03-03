@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MovimentPlayer : MonoBehaviour {
-
+public class MovimentPlayer : MonoBehaviour 
+{
 	public float velocity = 20f;
 	
 	public string controlVertical = "VerticalP1";
@@ -13,17 +13,25 @@ public class MovimentPlayer : MonoBehaviour {
 	{
 		Vector3 newPosition = gameObject.transform.position;
 		
-		if (Input.GetButton (controlVertical)) {
-			if (Input.GetAxis (controlVertical) > 0) {
+		if (Input.GetButton (controlVertical)) 
+		{
+			if (Input.GetAxis (controlVertical) > 0) 
+			{
 				newPosition.y += Time.deltaTime * velocity;
-			} else if (Input.GetAxis (controlVertical) < 0) {
+			} 
+			else if (Input.GetAxis (controlVertical) < 0) 
+			{
 				newPosition.y -= Time.deltaTime * velocity;
 			}
 		}
-		if (Input.GetButton (controlHorizontal)) {
-			if (Input.GetAxis (controlHorizontal) > 0) {
+		if (Input.GetButton (controlHorizontal)) 
+		{
+			if (Input.GetAxis (controlHorizontal) > 0) 
+			{
 				newPosition.x += Time.deltaTime * velocity;
-			} else if (Input.GetAxis (controlHorizontal) < 0) {
+			} 
+			else if (Input.GetAxis (controlHorizontal) < 0) 
+			{
 				newPosition.x -= Time.deltaTime * velocity;
 			}
 		}

@@ -22,7 +22,10 @@ function Start ()
 
 function Update () 
 {
-	var DistanceToPlayer = Vector2.Distance(ObjetoColidido.gameObject.transform.position, gameObject.transform.position);
+	var DistanceToPlayer = 0;
+	
+	if(jaColidiu)
+		DistanceToPlayer = Vector2.Distance(ObjetoColidido.gameObject.transform.position, gameObject.transform.position);
 
 	if(atrair==true){
 		Atracao();
@@ -31,10 +34,10 @@ function Update ()
 		//print('Off!!');
 	}
 	
-	if (DistanceToPlayer>3){
+	if (DistanceToPlayer>3)
+	{
 		atrair=true;
-		(gameObject.GetComponent( "UpDown" ) as MonoBehaviour).enabled = false;
-		
+		(gameObject.GetComponent( "UpDown" ) as MonoBehaviour).enabled = false;	
 	}
 	else{
 		atrair=false;
@@ -43,7 +46,7 @@ function Update ()
 //gameObject = particle
 }
 
-function OnTriggerEnter2D(objColidiu: Collider2D) 
+function OnCollisionEnter2D(objColidiu: Collision2D) 
 {
 //Player1
 	if (jaColidiu==false)
@@ -57,7 +60,7 @@ function OnTriggerEnter2D(objColidiu: Collider2D)
 				jaColidiu = true;
 				gameObject.tag = 'greenColididoP1';
 				ObjetoColidido = objColidiu.gameObject;
-				gameObject.collider2D.isTrigger=false;
+				//gameObject.collider2D.isTrigger=false;
 				var sinal1 = Instantiate (objSinal, gameObject.transform.position, gameObject.transform.rotation);
 				yield WaitForSeconds (1);
 				Destroy(sinal1);
@@ -75,7 +78,7 @@ function OnTriggerEnter2D(objColidiu: Collider2D)
 				jaColidiu = true;
 				gameObject.tag = 'greenColididoP2';
 				ObjetoColidido = objColidiu.gameObject;
-				gameObject.collider2D.isTrigger=false;
+				//gameObject.collider2D.isTrigger=false;
 				var sinal2 = Instantiate (objSinal, gameObject.transform.position, gameObject.transform.rotation);
 				yield WaitForSeconds (1);
 				Destroy(sinal2);

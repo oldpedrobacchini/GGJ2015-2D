@@ -66,7 +66,7 @@ public class Player : MonoBehaviour {
 //		updateNodes ();
 	}
 
-	void OnTriggerEnter2D(Collider2D other) 
+	void OnCollisionEnter2D(Collision2D other) 
 	{
 		if (other.gameObject.tag == "green" || other.gameObject.tag == "red") 
 		{
@@ -77,6 +77,9 @@ public class Player : MonoBehaviour {
 			if (other.gameObject.tag == "green" && numNodes < Game.MAX_NUMBER_GREEN)
 			{
 				addNode();
+				other.gameObject.GetComponent<Attract>().Follow(this.gameObject);
+				other.gameObject.GetComponent<UpDown>().enabled = false;
+				StartCoroutine(InstantiateGreenSinal());
 			}
 			else if (other.gameObject.tag == "red")
 			{
@@ -92,5 +95,12 @@ public class Player : MonoBehaviour {
 		GameObject redSinal = (GameObject)Instantiate (redSinalPrefab, gameObject.transform.position, gameObject.transform.rotation);
 		yield return new WaitForSeconds (1.0f);
 		Destroy(redSinal);
+	}
+
+	IEnumerator InstantiateGreenSinal()
+	{
+		GameObject greenSinal = (GameObject) Instantiate (greenSinalPrefab, gameObject.transform.position, gameObject.transform.rotation);
+		yield return new WaitForSeconds (1.0f);
+		Destroy(greenSinal);
 	}
 }
