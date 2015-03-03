@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour 
+{
 
-	int numNodes = 0;
+//	int numNodes = 0;
 //	public List<Node> nodes = new List<Node>();
 	public AudioClip rightSong;
 	public AudioClip wrongSong;
@@ -17,20 +19,26 @@ public class Player : MonoBehaviour {
 	public GameObject redSinalPrefab;
 	public GameObject greenSinalPrefab;
 
+	public CanvasRenderer numGreenNodes;
+
+	List<GameObject> greenNodes = new List<GameObject>();
+
 	public int getNumNodes()
 	{
-		return numNodes;
+//		return numNodes;
+		return greenNodes.Count;
 	}
 
-	public void addNode()
+	public void addNode(GameObject newGreenNode)
 	{
 		audio.clip = rightSong;
 		audio.Play ();
-		numNodes += 1;
-		if (numNodes > Game.MAX_NUMBER_GREEN) 
-		{
-			numNodes = 4;
-		}
+		greenNodes.Add(newGreenNode);
+		newGreenNode.gameObject.GetComponent<GreenNode>().Attract(this.gameObject);
+//		if (numNodes > Game.MAX_NUMBER_GREEN) 
+//		{
+//			numNodes = 4;
+//		}
 //		else 
 //		{
 //			Destroy (destoyerChild);
@@ -40,11 +48,22 @@ public class Player : MonoBehaviour {
 	
 	public void removeNode()
 	{
-		numNodes -= 1;
-		if (numNodes == -1) 
+		if (getNumNodes () > 0) 
+		{
+			GameObject removeNode = greenNodes [0];
+			greenNodes.RemoveAt (0);
+			removeNode.GetComponent<GreenNode> ().UnAttract ();
+		}
+		else
 		{
 			lastSpot.Ideath(gameObject.tag);
 		}
+
+//		numNodes -= 1;
+//		if (numNodes == -1) 
+//		{
+//			lastSpot.Ideath(gameObject.tag);
+//		}
 //		else {
 //			Destroy (destoyerChild);
 //			updateNodes ();
@@ -74,11 +93,11 @@ public class Player : MonoBehaviour {
 			
 			//Debug.Log (other.gameObject.tag+" "+gameObject.name);
 			
-			if (other.gameObject.tag == "green" && numNodes < Game.MAX_NUMBER_GREEN)
+			if (other.gameObject.tag == "green" && 
+			    getNumNodes() < Game.MAX_NUMBER_GREEN && 
+			    !other.gameObject.GetComponent<GreenNode>().isAttract())
 			{
-				addNode();
-				other.gameObject.GetComponent<Attract>().Follow(this.gameObject);
-				other.gameObject.GetComponent<UpDown>().enabled = false;
+				addNode(other.gameObject);
 				StartCoroutine(InstantiateGreenSinal());
 			}
 			else if (other.gameObject.tag == "red")
@@ -87,6 +106,7 @@ public class Player : MonoBehaviour {
 				removeNode();
 				StartCoroutine(InstantiateRedSinal());
 			}
+			numGreenNodes.GetComponent<Text>().text = getNumNodes().ToString();
 		}
 	}
 

@@ -48,7 +48,6 @@ public class LastSpot : MonoBehaviour
 
 		//Seta a posicao do save zone
 		gameObject.transform.position = getAvaliablePosition (30);
-		GetComponent<UpDown> ().setinitialPosition (gameObject.transform.position);
 
 		//Seta a posicao do Jogador 1
 		player1.transform.position = getAvaliablePosition (25.0f);
@@ -175,23 +174,24 @@ public class LastSpot : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other) 
 	{
-		Game game = FindObjectOfType<Game>();
-		Player p = other.gameObject.GetComponent<Player> ();
-		if (p.getNumNodes () == 4) 
+		if (other.gameObject.GetComponent<Player> () != null) 
 		{
-			if(p.tag == "Player1")
+			Game game = FindObjectOfType<Game> ();
+			Player p = other.gameObject.GetComponent<Player> ();
+			if (p.getNumNodes () == 4) 
 			{
-				game.addPointPlayer1();
-				collider2D.enabled = false;
-				//animaScreenWinP1.gameObject.SetActive (true);
+				if (p.tag == "Player1") 
+				{
+					game.addPointPlayer1 ();
+					collider2D.enabled = false;
+					//animaScreenWinP1.gameObject.SetActive (true);
+				} else if (p.tag == "Player2") {
+					game.addPointPlayer2 ();
+					collider2D.enabled = false;
+					//animaScreenWinP2.gameObject.SetActive (true);
+				}
+				StartCoroutine (finishLevel2 (p.tag));
 			}
-			else if(p.tag == "Player2")
-			{
-				game.addPointPlayer2();
-				collider2D.enabled = false;
-				//animaScreenWinP2.gameObject.SetActive (true);
-			}
-			StartCoroutine (finishLevel2(p.tag));
 		}
 	}
 
@@ -230,12 +230,12 @@ public class LastSpot : MonoBehaviour
 		if (tag == "Player1") 
 		{
 			animaScreenWinP1.gameObject.SetActive (true);
-			Camera.main.GetComponent<CameraSmoothDamp>().goTo(player1.transform.position, cameraSmoothTime);
+			Camera.main.GetComponent<CameraSmoothDamp>().goTo(player1.transform.position, cameraSmoothTime, 11);
 		}
 		else if(tag == "Player2")
 		{
 			animaScreenWinP2.gameObject.SetActive (true);
-			Camera.main.GetComponent<CameraSmoothDamp>().goTo(player2.transform.position, cameraSmoothTime);
+			Camera.main.GetComponent<CameraSmoothDamp>().goTo(player2.transform.position, cameraSmoothTime, 11);
 		}
 
 		yield return new WaitForSeconds (2.0f);

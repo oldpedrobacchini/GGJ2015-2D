@@ -10,12 +10,20 @@ public class UpDown : MonoBehaviour {
 
 	void Start()
 	{
-		initialPosition = transform.position;
+		BeginUpDown ();
 	}
 
-	public void setinitialPosition(Vector3 _initialPosition)
+	public void BeginUpDown()
 	{
-		initialPosition = _initialPosition;
+		this.enabled = true;
+		initialPosition = transform.position;
+		range = Random.Range (1.0f, 1.5f);
+		velocity = Random.Range (1.0f, 1.5f);
+	}
+
+	public void StopUpDown()
+	{
+		this.enabled = false;
 	}
 
 	// Update is called once per frame
