@@ -17,7 +17,8 @@ public class Player : MonoBehaviour
 
 	public CanvasRenderer numGreenNodes;
 
-	List<GameObject> greenNodes = new List<GameObject>();
+	[HideInInspector]
+	public List<GameObject> greenNodes = new List<GameObject>();
 
 	public int getNumNodes()
 	{
@@ -29,7 +30,10 @@ public class Player : MonoBehaviour
 		GetComponent<AudioSource>().clip = rightSong;
 		GetComponent<AudioSource>().Play ();
 		greenNodes.Add(newGreenNode);
-		newGreenNode.gameObject.GetComponent<GreenNode>().Attract(this.gameObject);
+		newGreenNode.GetComponent<Attract>().BeginAttract(this.gameObject,
+		                                                  Random.Range (3.0f, 5.0f),
+		                                                  Random.Range (0.1f, 0.4f));
+		newGreenNode.GetComponent<UpDown> ().StopUpDown ();
 	}
 	
 	public void removeNode()
@@ -38,7 +42,8 @@ public class Player : MonoBehaviour
 		{
 			GameObject removeNode = greenNodes [0];
 			greenNodes.RemoveAt (0);
-			removeNode.GetComponent<GreenNode> ().UnAttract ();
+			removeNode.GetComponent<Attract>().StopAttract();
+			removeNode.GetComponent<UpDown> ().BeginUpDown();
 		}
 		else
 		{
@@ -58,7 +63,7 @@ public class Player : MonoBehaviour
 		{	
 			if (other.gameObject.tag == "green" && 
 			    getNumNodes() < Game.MAX_NUMBER_GREEN && 
-			    !other.gameObject.GetComponent<GreenNode>().isAttract())
+			    !other.gameObject.GetComponent<Attract>().isAttract())
 			{
 				addNode(other.gameObject);
 				StartCoroutine(Utility.InstantiateSignal(greenSignalPrefab,gameObject));
