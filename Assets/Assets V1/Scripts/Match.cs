@@ -178,11 +178,9 @@ public class Match : MonoBehaviour
 		if (player == "Player1") 
 		{
 			game.addPointPlayer1 ();
-			GetComponent<Collider2D>().enabled = false;
 		} else if (player == "Player2") 
 		{
 			game.addPointPlayer2 ();
-			GetComponent<Collider2D>().enabled = false;
 		}
 		StartCoroutine (finishLevel(player));
 	}

@@ -24,10 +24,10 @@ function Start ()
 
 function Update () 
 {
-	//if(GanhouP1==true)
-	//	AtracaoBlackHoleP1();
-	//if(GanhouP2==true)
-	//	AtracaoBlackHoleP2();
+	if(GanhouP1==true)
+		AtracaoBlackHoleP1();
+	if(GanhouP2==true)
+		AtracaoBlackHoleP2();
 
 }
 
@@ -48,13 +48,16 @@ function OnTriggerEnter2D(objColidiu: Collider2D)
 }
 
 
-function P1WIN(){
+function P1WIN()
+{
 	GanhouP1 = true;
 	animaScreenWinP1.SetActive(true);
 	
 	var sinalBH1 = Instantiate (objSinalFinal, gameObject.transform.position, gameObject.transform.rotation);
+	
 	(GameObject.Find("Player1").GetComponent( "MovimentPlayer1" ) as MonoBehaviour).enabled = false;
 	(GameObject.Find("Player2").GetComponent( "MovimentPlayer2" ) as MonoBehaviour).enabled = false;
+	
 	GameObject.Find("Player1").GetComponent.<Collider2D>().isTrigger=true;
 	GameObject.Find("Player2").GetComponent.<Collider2D>().isTrigger=true;
 	
@@ -66,13 +69,16 @@ function P1WIN(){
 
 
 
-function P2WIN(){
+function P2WIN()
+{
 	GanhouP2 = true;
 	animaScreenWinP1.SetActive(true);
 
 	var sinalBH2 = Instantiate (objSinalFinal, gameObject.transform.position, gameObject.transform.rotation);
+
 	(GameObject.Find("Player1").GetComponent( "MovimentPlayer1" ) as MonoBehaviour).enabled = false;
 	(GameObject.Find("Player2").GetComponent( "MovimentPlayer2" ) as MonoBehaviour).enabled = false;
+
 	GameObject.Find("Player1").GetComponent.<Collider2D>().isTrigger=true;
 	GameObject.Find("Player2").GetComponent.<Collider2D>().isTrigger=true;
 	
