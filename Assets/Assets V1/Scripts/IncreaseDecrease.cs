@@ -3,13 +3,13 @@ using System.Collections;
 
 public class IncreaseDecrease : MonoBehaviour 
 {
-	Vector3 initialScale;
+//	Vector3 initialScale;
 	float _scaleFator;
 
 	// Use this for initialization
 	void Start () 
 	{
-		initialScale = transform.localScale;
+//		initialScale = transform.localScale;
 	}
 
 	void Update()
