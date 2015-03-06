@@ -189,15 +189,10 @@ public class Match : MonoBehaviour
 		player1.GetComponent<MovimentPlayer> ().enabled = false;
 		player2.GetComponent<MovimentPlayer> ().enabled = false;
 
-//		foreach (GameObject grenNode in GameObject.FindGameObjectsWithTag ("green")) 
-//		{
-//			grenNode.GetComponent<UpDown>().StopUpDown();
-//		}
-//
-//		foreach (GameObject redNode in GameObject.FindGameObjectsWithTag ("red")) 
-//		{
-//			redNode.GetComponent<UpDown>().StopUpDown();
-//		}
+		foreach (Node Node in GameObject.FindObjectsOfType<Node>()) 
+		{
+			Node.StopNode();
+		}
 		
 		if (tag == "Player1") 
 		{
