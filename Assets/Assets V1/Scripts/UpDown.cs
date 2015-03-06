@@ -1,15 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class UpDown : MonoBehaviour {
-
-	public float range = 1.0f;
-	public float velocity = 1;
+public class UpDown : MonoBehaviour 
+{
 	Vector3 initialPosition;
 	bool isUp = true;
 
+	public float range = 1.0f;
+	public float speed = 1;
+	public bool isRandom;
+
 	void Start()
 	{
+		if (isRandom) 
+		{
+			range = Random.Range (1.0f, 1.5f);
+			speed = Random.Range (1.0f, 1.5f);
+		}
+
 		BeginUpDown ();
 	}
 
@@ -17,12 +25,6 @@ public class UpDown : MonoBehaviour {
 	{
 		this.enabled = true;
 		initialPosition = transform.position;
-	}
-
-	public void RandomMoviment()
-	{
-		range = Random.Range (1.0f, 1.5f);
-		velocity = Random.Range (1.0f, 1.5f);
 	}
 
 	public void StopUpDown()
@@ -37,7 +39,7 @@ public class UpDown : MonoBehaviour {
 		{
 			if (transform.position.y<initialPosition.y+range)
 			{
-				transform.position = new Vector3(transform.position.x,transform.position.y+velocity*Time.deltaTime,transform.position.z);
+				transform.position = new Vector3(transform.position.x,transform.position.y+speed*Time.deltaTime,transform.position.z);
 			}
 			else
 			{
@@ -48,7 +50,7 @@ public class UpDown : MonoBehaviour {
 		{
 			if (transform.position.y>initialPosition.y)
 			{
-				transform.position = new Vector3(transform.position.x,transform.position.y-velocity*Time.deltaTime,transform.position.z);
+				transform.position = new Vector3(transform.position.x,transform.position.y-speed*Time.deltaTime,transform.position.z);
 			}
 			else
 			{

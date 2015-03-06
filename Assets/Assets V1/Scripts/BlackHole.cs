@@ -19,9 +19,11 @@ public class BlackHole : MonoBehaviour
 				foreach(GameObject greenNode in other.GetComponent<Player>().greenNodes)
 				{
 					greenNode.GetComponent<Attract>().BeginAttract(this.gameObject,0.0f,0.1f);
+					greenNode.GetComponent<IncreaseDecrease>().BeginDecrease(100f);
 				}
 
 				other.GetComponent<Attract>().BeginAttract(this.gameObject,0.0f,0.1f);
+				other.GetComponent<IncreaseDecrease>().BeginDecrease(10f);
 			}
 		}
 	}

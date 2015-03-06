@@ -12,10 +12,10 @@ public class Match : MonoBehaviour
 	public int numRedNode = 10;
 	public int numGreenNode = 10;
 	
-	public GameObject redNode;
-	public GameObject greenNode;
-	public GameObject animaScreenWinP1;
-	public GameObject animaScreenWinP2;
+	public GameObject redNodePrefab;
+	public GameObject greenNodePrefab;
+	public GameObject winPlayer1;
+	public GameObject winPlayer2;
 	
 	public GameObject player1;
 	public GameObject player2;
@@ -60,16 +60,14 @@ public class Match : MonoBehaviour
 		//Cria os nos vermelhos
 		for (int i=0; i<numRedNode; i++) 
 		{
-			GameObject node = (GameObject) Instantiate (redNode);
-			node.GetComponent<UpDown>().RandomMoviment();
+			GameObject node = (GameObject) Instantiate (redNodePrefab);
 			node.transform.position = getAvaliablePosition(node.transform.localScale.x);
 		}
 		
 		//Cria os nos verdes
 		for (int i=0; i<numGreenNode; i++) 
 		{
-			GameObject node = (GameObject) Instantiate (greenNode);
-			node.GetComponent<UpDown>().RandomMoviment();
+			GameObject node = (GameObject) Instantiate (greenNodePrefab);
 			node.transform.position = getAvaliablePosition(node.transform.localScale.x);
 		}
 		
@@ -190,15 +188,27 @@ public class Match : MonoBehaviour
 		//BlackHole Attract
 		player1.GetComponent<MovimentPlayer> ().enabled = false;
 		player2.GetComponent<MovimentPlayer> ().enabled = false;
+
+//		foreach (GameObject grenNode in GameObject.FindGameObjectsWithTag ("green")) 
+//		{
+//			grenNode.GetComponent<UpDown>().StopUpDown();
+//		}
+//
+//		foreach (GameObject redNode in GameObject.FindGameObjectsWithTag ("red")) 
+//		{
+//			redNode.GetComponent<UpDown>().StopUpDown();
+//		}
 		
 		if (tag == "Player1") 
 		{
-			animaScreenWinP1.gameObject.SetActive (true);
+			winPlayer1.transform.position = new Vector3(player1.transform.position.x-10f,player1.transform.position.y,player1.transform.position.z);                       
+			winPlayer1.gameObject.SetActive (true);
 			Camera.main.GetComponent<CameraSmoothDamp>().goTo(player1.transform.position, cameraSmoothTime, 11);
 		}
 		else if(tag == "Player2")
 		{
-			animaScreenWinP2.gameObject.SetActive (true);
+			winPlayer2.transform.position = new Vector3(player2.transform.position.x+10f,player2.transform.position.y,player2.transform.position.z);                       
+			winPlayer2.gameObject.SetActive (true);
 			Camera.main.GetComponent<CameraSmoothDamp>().goTo(player2.transform.position, cameraSmoothTime, 11);
 		}
 		
