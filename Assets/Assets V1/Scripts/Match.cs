@@ -162,12 +162,17 @@ public class Match : MonoBehaviour
 		{
 			game.addPointPlayer2();
 			StartCoroutine (finishLevel("Player2"));
+			winPlayer2.transform.position = new Vector3(player2.transform.position.x+10f,player2.transform.position.y,player2.transform.position.z);                       
+			winPlayer2.gameObject.SetActive (true);
 		}
 		else if(tag == "Player2")
 		{
 			game.addPointPlayer1();
 			StartCoroutine (finishLevel("Player1"));
+			winPlayer1.transform.position = new Vector3(player1.transform.position.x-10f,player1.transform.position.y,player1.transform.position.z);                       
+			winPlayer1.gameObject.SetActive (true);
 		}
+		BlackHole.GetComponent<BlackHole>().StopBlackHole();
 	}
 
 	public void finishMatch(string player)
@@ -176,11 +181,13 @@ public class Match : MonoBehaviour
 		if (player == "Player1") 
 		{
 			game.addPointPlayer1 ();
+			winPlayer1.gameObject.SetActive (true);
 		} else if (player == "Player2") 
 		{
 			game.addPointPlayer2 ();
+			winPlayer2.gameObject.SetActive (true);
 		}
-		StartCoroutine (finishLevel(player));
+		StartCoroutine (finishLevel("BlackHole"));
 	}
 
 	IEnumerator finishLevel(string tag)
@@ -190,21 +197,19 @@ public class Match : MonoBehaviour
 		player2.GetComponent<MovimentPlayer> ().enabled = false;
 
 		foreach (Node Node in GameObject.FindObjectsOfType<Node>()) 
-		{
 			Node.StopNode();
-		}
 		
 		if (tag == "Player1") 
 		{
-			winPlayer1.transform.position = new Vector3(player1.transform.position.x-10f,player1.transform.position.y,player1.transform.position.z);                       
-			winPlayer1.gameObject.SetActive (true);
 			Camera.main.GetComponent<CameraSmoothDamp>().goTo(player1.transform.position, cameraSmoothTime, 11);
 		}
 		else if(tag == "Player2")
 		{
-			winPlayer2.transform.position = new Vector3(player2.transform.position.x+10f,player2.transform.position.y,player2.transform.position.z);                       
-			winPlayer2.gameObject.SetActive (true);
 			Camera.main.GetComponent<CameraSmoothDamp>().goTo(player2.transform.position, cameraSmoothTime, 11);
+		}
+		else if(tag == "BlackHole")
+		{
+			Camera.main.GetComponent<CameraSmoothDamp>().goTo(BlackHole.transform.position,cameraSmoothTime, 11);
 		}
 		
 		yield return new WaitForSeconds (2.0f);

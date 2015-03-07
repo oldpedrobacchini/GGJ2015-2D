@@ -5,6 +5,13 @@ public class BlackHole : MonoBehaviour
 {		
 	public Match match;
 	public GameObject lastSignalPrefab;
+	public UpDown[] moviments;
+
+	public void StopBlackHole()
+	{
+		foreach (UpDown moviment in moviments)
+			moviment.StopUpDown ();
+	}
 
 	void OnTriggerEnter2D(Collider2D other) 
 	{
