@@ -1,35 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class UpDown : MonoBehaviour 
+public class BehaviorUpDown : MonoBehaviour 
 {
 	Vector3 initialPosition;
 	bool isUp = true;
 
 	public float range = 1.0f;
 	public float speed = 1;
-	public bool isRandom;
 
 	void Start()
 	{
-		if (isRandom) 
-		{
-			range = Random.Range (1.0f, 1.5f);
-			speed = Random.Range (1.0f, 1.5f);
-		}
-
-		BeginUpDown ();
-	}
-
-	public void BeginUpDown()
-	{
-		this.enabled = true;
 		initialPosition = transform.position;
 	}
 
-	public void StopUpDown()
+	public void randomBehavior()
 	{
-		this.enabled = false;
+		range = Random.Range (0.2f, 0.8f);
+		speed = Random.Range (1.0f, 1.5f);
 	}
 
 	// Update is called once per frame
@@ -48,7 +36,7 @@ public class UpDown : MonoBehaviour
 		}
 		else
 		{
-			if (transform.position.y>initialPosition.y)
+			if (transform.position.y>initialPosition.y-range)
 			{
 				transform.position = new Vector3(transform.position.x,transform.position.y-speed*Time.deltaTime,transform.position.z);
 			}

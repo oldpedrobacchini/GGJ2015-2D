@@ -38,7 +38,7 @@ public class GameServer : MonoBehaviour {
 			GameObject[] goPlayers = GameObject.FindGameObjectsWithTag("Player");
 			foreach(GameObject gop in goPlayers)
 			{
-				NetworkPlayer gonp = gop.GetComponent<Player>().netPlayer;
+				NetworkPlayer gonp = gop.GetComponent<NodePlayer>().netPlayer;
 				NetworkViewID gonvid = gop.GetComponent<NetworkView>().viewID;
 				
 				if(gonp.ToString() != info.sender.ToString())
@@ -117,7 +117,7 @@ public class GameServer : MonoBehaviour {
 		newPlayer.tag = "Player";
 
 		newPlayer.GetComponent<MovimentPlayer1>().startMovimentServer(pos);
-		newPlayer.GetComponent<Player>().netPlayer = p;
+		newPlayer.GetComponent<NodePlayer>().netPlayer = p;
 		players.Add(p,newPlayer);
 	}
 	

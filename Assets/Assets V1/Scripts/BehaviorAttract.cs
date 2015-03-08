@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Attract : MonoBehaviour 
+public class BehaviorAttract : MonoBehaviour 
 {
 	GameObject _target;
 	Vector2 speedMagnetic;
@@ -31,11 +31,6 @@ public class Attract : MonoBehaviour
 				transform.position = new Vector3(newPositionX,newPositionY,transform.position.z);
 			}
 		}
-	}
-
-	public void StopAttract()
-	{
-		_target = null;
 	}
 
 	public void BeginAttract(GameObject target, float minDistanceAttract, float attractSmoothTime)

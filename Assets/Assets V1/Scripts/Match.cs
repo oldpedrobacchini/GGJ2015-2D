@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Match : MonoBehaviour 
 {
+	public bool isDebug = false;
+	public GameObject debugPrefab;
 
 	public int limiteX = 24;
 	public int limiteY = 12;
@@ -29,7 +31,7 @@ public class Match : MonoBehaviour
 	float cameraSmoothTime = 10f;
 	
 	List<Vector2> avaliablePositons = new List<Vector2>();
-	
+
 	//	private Game game = null;
 	
 	void Awake()
@@ -50,26 +52,29 @@ public class Match : MonoBehaviour
 		}
 		
 		//Seta a posicao do black hole 
-		BlackHole.transform.position = getAvaliablePosition (40);
+		BlackHole.transform.position = getAvaliablePosition (30f,30f);
 		
 		//Seta a posicao do Jogador 1
-		player1.transform.position = getAvaliablePosition (25.0f);
+		player1.transform.position = getAvaliablePosition (30f,30f);
 		//Seta a posicao do Jogador 2
-		player2.transform.position = getAvaliablePosition (25.0f);
+		player2.transform.position = getAvaliablePosition (30f,30f);
 		
 		//Cria os nos vermelhos
 		for (int i=0; i<numRedNode; i++) 
-		{
-			GameObject node = (GameObject) Instantiate (redNodePrefab);
-			node.transform.position = getAvaliablePosition(node.transform.localScale.x);
-		}
+			Instantiate (redNodePrefab,getAvaliablePosition(10f,10f),Quaternion.identity);
 		
 		//Cria os nos verdes
 		for (int i=0; i<numGreenNode; i++) 
+			Instantiate (greenNodePrefab,getAvaliablePosition(10f,10f),Quaternion.identity);
+
+		if(isDebug)
 		{
-			GameObject node = (GameObject) Instantiate (greenNodePrefab);
-			node.transform.position = getAvaliablePosition(node.transform.localScale.x);
-		}
+			foreach(Vector2 avaliablePositon in avaliablePositons)
+			{
+				Vector3 newPosition = new Vector3(avaliablePositon.x,avaliablePositon.y,0);
+				Instantiate(debugPrefab,newPosition,Quaternion.identity);
+			}
+        }
 		
 		//Seta o valor dos pontos atuais dos jogadores
 		UIPointsP1.GetComponent<Text> ().text = game.getPointsPlayer1 ();
@@ -107,7 +112,7 @@ public class Match : MonoBehaviour
 		}
 	}
 	
-	public Vector3 getAvaliablePosition(float radius)
+	public Vector3 getAvaliablePosition(float width,float height)
 	{
 		
 		//Debug.Log (avaliable.Count);
@@ -116,23 +121,24 @@ public class Match : MonoBehaviour
 		//Debug.Log (newPostionAvaliable);
 		Vector2 newAvaliable = avaliablePositons[newPostionAvaliable];
 		
-		int remove = (int) Mathf.Ceil(radius/10.0f);
+		int removeX = (int) Mathf.Ceil (width / 10f);
+		int removeY = (int) Mathf.Ceil (height / 10f);
 		
-		int startRow = ((int)newAvaliable.x - remove);
+		int startRow = ((int)newAvaliable.x - removeX);
 		if (startRow < -limiteX)
 			startRow = -limiteX;
 		
-		int endRow = ((int)newAvaliable.x + remove);
+		int endRow = ((int)newAvaliable.x + removeX);
 		if (endRow > limiteX)
 			endRow = limiteX;
 		
 		while(startRow<=endRow)
 		{
-			int startCol = ((int)newAvaliable.y - remove);
+			int startCol = ((int)newAvaliable.y - removeY);
 			if (startCol < -limiteY)
 				startCol = -limiteY;
 			
-			int endCol = ((int)newAvaliable.y + remove);
+			int endCol = ((int)newAvaliable.y + removeY);
 			if (endCol > limiteY)
 				endCol = limiteY;
 			
@@ -196,8 +202,8 @@ public class Match : MonoBehaviour
 		player1.GetComponent<MovimentPlayer> ().enabled = false;
 		player2.GetComponent<MovimentPlayer> ().enabled = false;
 
-		foreach (Node Node in GameObject.FindObjectsOfType<Node>()) 
-			Node.StopNode();
+		foreach (NodeElement Node in GameObject.FindObjectsOfType<NodeElement>()) 
+			Node.StopNodeElement ();
 		
 		if (tag == "Player1") 
 		{
@@ -215,5 +221,13 @@ public class Match : MonoBehaviour
 		yield return new WaitForSeconds (2.0f);
 		
 		Application.LoadLevel(Application.loadedLevel);
+	}
+
+	public IEnumerator newRed(Node redNode)
+	{
+		yield return new WaitForSeconds (2.0f);
+		redNode.gameObject.GetComponent<Collider2D> ().enabled = true;
+		redNode.Increase (10f, redNodePrefab.transform.localScale);
+		Debug.Log ("New redNode: "+redNode.name);
 	}
 }

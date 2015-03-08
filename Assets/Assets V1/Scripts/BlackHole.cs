@@ -5,32 +5,32 @@ public class BlackHole : MonoBehaviour
 {		
 	public Match match;
 	public GameObject lastSignalPrefab;
-	public UpDown[] moviments;
+	public BehaviorUpDown[] moviments;
 
 	public void StopBlackHole()
 	{
-		foreach (UpDown moviment in moviments)
-			moviment.StopUpDown ();
+		foreach (BehaviorUpDown moviment in moviments)
+			Destroy (moviment);
 	}
 
 	void OnTriggerEnter2D(Collider2D other) 
 	{
-		if (other.GetComponent<Player>() != null) 
+		if (other.GetComponent<NodePlayer>() != null) 
 		{
-			if (other.GetComponent<Player>().getNumNodes () == 4) 
+			if (other.GetComponent<NodePlayer>().getNumNodes () == 4) 
 			{
-				match.finishMatch(other.gameObject.GetComponent<Player> ().tag);
+				match.finishMatch(other.tag);
 				GetComponent<Collider2D>().enabled = false;
 				StartCoroutine(Utility.InstantiateSignal(lastSignalPrefab,gameObject));
 
-				foreach(GameObject greenNode in other.GetComponent<Player>().greenNodes)
+				foreach(Node greenNode in other.GetComponent<NodePlayer>().greenNodes)
 				{
-					greenNode.GetComponent<Attract>().BeginAttract(this.gameObject,0.0f,0.1f);
-					greenNode.GetComponent<IncreaseDecrease>().BeginDecrease(100f);
+					greenNode.BeginAttract(this.gameObject,0.0f,0.1f);
+					greenNode.Decrease(100f,Vector3.zero);
 				}
 
-				other.GetComponent<Attract>().BeginAttract(this.gameObject,0.0f,0.1f);
-				other.GetComponent<IncreaseDecrease>().BeginDecrease(10f);
+				other.GetComponent<NodePlayer>().BeginAttract(this.gameObject,0.0f,0.1f);
+				other.GetComponent<NodePlayer>().Decrease(10f,Vector3.zero);
 			}
 		}
 	}
