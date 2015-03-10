@@ -38,14 +38,19 @@ public class MovimentPlayer : MonoBehaviour
 			transform.position = newPosition;
 		}
 
-		Vector2 touchPos = Vector2.zero;
-
-
-
-
-		if (Input.GetMouseButton(0) && controlVertical == "VerticalP1")
+		if ((Input.GetMouseButton(0) || Input.touchCount > 0) && controlVertical == "VerticalP1")
 		{
-			touchPos = Input.mousePosition;
+			Vector2 touchPos = Vector2.zero;
+
+			if(Input.GetMouseButton(0))
+			{
+				touchPos = Input.mousePosition;
+			}
+
+			if(Input.touchCount > 0)
+			{
+				touchPos = Input.GetTouch(0).position;
+			}
 
 			newPosition = Camera.main.ScreenToWorldPoint(touchPos);
 
@@ -54,9 +59,6 @@ public class MovimentPlayer : MonoBehaviour
 
 			transform.position = new Vector3(newPositionX,newPositionY,transform.position.z);
 		} 
-
-//		Touch touch = Input.GetTouch (0);
-//		Debug.Log (touch);
 	}
 
 	public float InputControl(string Control,float originalPosition)

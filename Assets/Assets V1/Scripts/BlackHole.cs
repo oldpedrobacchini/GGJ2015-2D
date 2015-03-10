@@ -13,7 +13,7 @@ public class BlackHole : MonoBehaviour
 			Destroy (moviment);
 	}
 
-	void OnTriggerEnter2D(Collider2D other) 
+	void OnTriggerStay2D(Collider2D other) 
 	{
 		if (other.GetComponent<NodePlayer>() != null) 
 		{

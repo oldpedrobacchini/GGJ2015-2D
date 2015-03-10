@@ -29,8 +29,12 @@ public class Match : MonoBehaviour
 	public CanvasRenderer UIPointsP2;
 	
 	float cameraSmoothTime = 10f;
-	
+
 	List<Vector2> avaliablePositons = new List<Vector2>();
+
+	bool isFinish = false;
+
+	public AudioClip perfectEffect;
 
 	//	private Game game = null;
 	
@@ -188,16 +192,33 @@ public class Match : MonoBehaviour
 		{
 			game.addPointPlayer1 ();
 			winPlayer1.gameObject.SetActive (true);
+			//Perfect
+			if(player2.GetComponent<NodePlayer>().getNumNodes() == 0)
+			{
+				GetComponent<AudioSource>().clip = perfectEffect;
+				GetComponent<AudioSource>().Play ();
+				winPlayer1.GetComponentInChildren<Text> ().text = "PERFECT";
+				winPlayer1.GetComponentInChildren<Text> ().fontSize = 66;
+			}
 		} else if (player == "Player2") 
 		{
 			game.addPointPlayer2 ();
 			winPlayer2.gameObject.SetActive (true);
+			//Perfect
+			if(player1.GetComponent<NodePlayer>().getNumNodes() == 0)
+			{
+				GetComponent<AudioSource>().clip = perfectEffect;
+				GetComponent<AudioSource>().Play ();
+				winPlayer2.GetComponentInChildren<Text> ().text = "PERFECT";
+				winPlayer2.GetComponentInChildren<Text> ().fontSize = 66;
+			}
 		}
 		StartCoroutine (finishLevel("BlackHole"));
 	}
 
 	IEnumerator finishLevel(string tag)
 	{
+		isFinish = true;
 		//BlackHole Attract
 		player1.GetComponent<MovimentPlayer> ().enabled = false;
 		player2.GetComponent<MovimentPlayer> ().enabled = false;
@@ -226,8 +247,13 @@ public class Match : MonoBehaviour
 	public IEnumerator newRed(Node redNode)
 	{
 		yield return new WaitForSeconds (2.0f);
-//		redNode.gameObject.GetComponent<Collider2D> ().enabled = true;
-		redNode.Increase (10f, redNodePrefab.transform.localScale);
-//		Debug.Log ("New redNode: "+redNode.name);
+		//Todo arrumar bug dos objetos continuarem a serem criados mesmo depois que o jogo termina
+		// arrumado com essa variavel porem ver uma forma melhor
+		if(!isFinish)
+		{
+//			redNode.gameObject.GetComponent<Collider2D> ().enabled = true;
+			redNode.Increase (10f, redNodePrefab.transform.localScale);
+//			Debug.Log ("New redNode: "+redNode.name);
+		}
 	}
 }
