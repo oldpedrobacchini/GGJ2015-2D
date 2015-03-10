@@ -30,6 +30,12 @@ public class NodePlayer : Node
 		GetComponent<AudioSource>().clip = rightSong;
 		GetComponent<AudioSource>().Play ();
 		greenNodes.Add(newGreenNode);
+
+		if (tag == "Player1")
+			newGreenNode.transform.GetChild (0).GetComponent<SpriteRenderer> ().color = Color.red;
+		if (tag == "Player2")
+			newGreenNode.transform.GetChild (0).GetComponent<SpriteRenderer> ().color = Color.cyan;
+
 		newGreenNode.BeginAttract(this.gameObject,Random.Range (3.0f, 5.0f),Random.Range (0.1f, 0.4f));
 		newGreenNode.StopUpDown ();
 	}
@@ -40,6 +46,7 @@ public class NodePlayer : Node
 		{
 			NodeElement removeGreenNode = greenNodes [0];
 			greenNodes.RemoveAt (0);
+			removeGreenNode.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
 			removeGreenNode.StopAttract();
 			removeGreenNode.BeginUpDown();
 		}

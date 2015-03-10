@@ -28,6 +28,12 @@ public class Node : MonoBehaviour
 	{
 		BehaviorIncreaseDecrease incDec = gameObject.AddComponent<BehaviorIncreaseDecrease> ();
 		incDec.Increase (scaleFator, majorScale);
+		if(tag == "red")
+		{
+			incDec.onFinish = delegate() {
+				gameObject.GetComponent<Collider2D>().enabled = true;
+			};
+		}
 	}
 
 	public void Decrease(float scaleFator,Vector3 lessScale)

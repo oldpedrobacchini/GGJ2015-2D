@@ -226,8 +226,8 @@ public class Match : MonoBehaviour
 	public IEnumerator newRed(Node redNode)
 	{
 		yield return new WaitForSeconds (2.0f);
-		redNode.gameObject.GetComponent<Collider2D> ().enabled = true;
+//		redNode.gameObject.GetComponent<Collider2D> ().enabled = true;
 		redNode.Increase (10f, redNodePrefab.transform.localScale);
-		Debug.Log ("New redNode: "+redNode.name);
+//		Debug.Log ("New redNode: "+redNode.name);
 	}
 }
