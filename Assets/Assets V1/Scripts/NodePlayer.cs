@@ -37,7 +37,7 @@ public class NodePlayer : Node
 			newGreenNode.transform.GetChild (0).GetComponent<SpriteRenderer> ().color = Color.cyan;
 
 		newGreenNode.BeginAttract(this.gameObject,Random.Range (3.0f, 5.0f),Random.Range (0.1f, 0.4f));
-		newGreenNode.StopUpDown ();
+//		newGreenNode.StopUpDown ();
 	}
 	
 	public void removeNode()
@@ -48,7 +48,7 @@ public class NodePlayer : Node
 			greenNodes.RemoveAt (0);
 			removeGreenNode.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
 			removeGreenNode.StopAttract();
-			removeGreenNode.BeginUpDown();
+//			removeGreenNode.BeginUpDown();
 		}
 		else
 		{

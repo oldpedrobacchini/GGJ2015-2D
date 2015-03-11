@@ -13,24 +13,15 @@ public class MovimentPlayer : MonoBehaviour
 	// Update is called once per frame	
 	void Update () 
 	{
-		Vector3 newPosition = transform.position;
 		/*
-		if (Input.GetButton (controlHorizontal) && Input.GetButton (controlVertical)) 
-		{
-			newPosition.x = InputControl(controlHorizontal,transform.position.x);
+		Vector3 newPosition = transform.position;
 
-			newPosition.y = InputControl(controlVertical,transform.position.y);
-
-			gameObject.transform.position = newPosition;
-		}
-		else */
 		if (Input.GetButton (controlHorizontal)) 
 		{
 			newPosition.x = InputControl(controlHorizontal,transform.position.x);
 
 			transform.position = newPosition;
 		}
-		//else 
 		if (Input.GetButton (controlVertical)) 
 		{
 			newPosition.y = InputControl(controlVertical,transform.position.y);
@@ -59,6 +50,7 @@ public class MovimentPlayer : MonoBehaviour
 
 			transform.position = new Vector3(newPositionX,newPositionY,transform.position.z);
 		} 
+		*/
 	}
 
 	public float InputControl(string Control,float originalPosition)
