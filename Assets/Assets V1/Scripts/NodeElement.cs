@@ -8,7 +8,7 @@ public class NodeElement : Node
 	void Start()
 	{
 		anim.speed = Random.Range (1f, 2f);
-		//BeginUpDown ();
+//		BeginUpDown ();
 	}
 	
 	public void StopNodeElement()
@@ -18,14 +18,16 @@ public class NodeElement : Node
 	}
 
 	//------ UpDown
-	//public void BeginUpDown()
-	//{
-	//	BehaviorUpDown upDown = gameObject.AddComponent<BehaviorUpDown> ();
-	//	upDown.randomBehavior();
-	//}
+/*
+	public void BeginUpDown()
+	{
+		BehaviorUpDown upDown = gameObject.AddComponent<BehaviorUpDown> ();
+		upDown.randomBehavior();
+	}
 	
-	//public void StopUpDown()
-	//{
-	//	Destroy(GetComponent<BehaviorUpDown>());
-	//}
+	public void StopUpDown()
+	{
+		Destroy(GetComponent<BehaviorUpDown>());
+	}
+*/
 }

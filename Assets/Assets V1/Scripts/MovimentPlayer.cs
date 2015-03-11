@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MovimentPlayer : MonoBehaviour 
 {
-	public float velocity = 20f;
+	public float speed = 20f;
 	
 	public string controlVertical = "VerticalP1";
 	public string controlHorizontal = "HorizontalP1";
@@ -13,6 +13,15 @@ public class MovimentPlayer : MonoBehaviour
 	// Update is called once per frame	
 	void Update () 
 	{
+		float moveHorizontal = Input.GetAxis (controlVertical);
+		float moveVertical = Input.GetAxis (controlHorizontal);
+		
+		Vector2 moviment = new Vector2 (moveVertical,moveHorizontal );
+		if(tag=="Player1")
+			Debug.Log (moviment);
+
+		GetComponent<Rigidbody2D> ().velocity = moviment * (speed*100) * Time.deltaTime;
+
 		/*
 		Vector3 newPosition = transform.position;
 
@@ -57,11 +66,11 @@ public class MovimentPlayer : MonoBehaviour
 	{
 		if (Input.GetAxis (Control) > 0) 
 		{
-			originalPosition += Time.deltaTime * velocity;
+			originalPosition += Time.deltaTime * speed;
 		} 
 		else if (Input.GetAxis (Control) < 0) 
 		{
-			originalPosition -= Time.deltaTime * velocity;
+			originalPosition -= Time.deltaTime * speed;
 		}
 		return originalPosition;
 	}
