@@ -13,16 +13,6 @@ public class MovimentPlayer : MonoBehaviour
 	// Update is called once per frame	
 	void Update () 
 	{
-		float moveHorizontal = Input.GetAxis (controlVertical);
-		float moveVertical = Input.GetAxis (controlHorizontal);
-		
-		Vector2 moviment = new Vector2 (moveVertical,moveHorizontal );
-		if(tag=="Player1")
-			Debug.Log (moviment);
-
-		GetComponent<Rigidbody2D> ().velocity = moviment * (speed*100) * Time.deltaTime;
-
-		/*
 		Vector3 newPosition = transform.position;
 
 		if (Input.GetButton (controlHorizontal)) 
@@ -59,7 +49,6 @@ public class MovimentPlayer : MonoBehaviour
 
 			transform.position = new Vector3(newPositionX,newPositionY,transform.position.z);
 		} 
-		*/
 	}
 
 	public float InputControl(string Control,float originalPosition)

@@ -6,13 +6,13 @@ public class Node : MonoBehaviour
 	//---------- Attract
 	public void BeginAttract(GameObject target, float minDistanceAttract, float attractSmoothTime)
 	{
-		//BehaviorAttract att = gameObject.AddComponent<BehaviorAttract> ();
-		//att.BeginAttract (target, minDistanceAttract, attractSmoothTime);
+		BehaviorAttract att = gameObject.AddComponent<BehaviorAttract> ();
+		att.BeginAttract (target, minDistanceAttract, attractSmoothTime);
 	}
 
 	public void StopAttract()
 	{
-		//Destroy (GetComponent<BehaviorAttract> ());
+		Destroy (GetComponent<BehaviorAttract> ());
 	}
 
 	public bool isAttract()
