@@ -42,6 +42,9 @@ public class NodePlayer : Node
 	
 	public void removeNode()
 	{
+		GetComponent<AudioSource>().clip = wrongSong;
+		GetComponent<AudioSource>().Play ();
+
 		if (getNumNodes () > 0) 
 		{
 			NodeElement removeGreenNode = greenNodes [0];

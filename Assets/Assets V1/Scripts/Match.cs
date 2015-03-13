@@ -34,6 +34,7 @@ public class Match : MonoBehaviour
 
 	bool isFinish = false;
 
+	public AudioClip CountdownEffect;
 	public AudioClip perfectEffect;
 
 	//	private Game game = null;
@@ -90,13 +91,18 @@ public class Match : MonoBehaviour
 	// Chamar essa funcao para mostrar a contagem regressiva no comeco do jogo
 	IEnumerator getReady ()    
 	{	
+		GetComponent<AudioSource>().clip = CountdownEffect;
+
 		UICountdown.GetComponentInChildren<Text> ().text = "3";
+		GetComponent<AudioSource>().Play ();
 		yield return new WaitForSeconds(1.0f);
 		
 		UICountdown.GetComponentInChildren<Text> ().text = "2";
+		GetComponent<AudioSource>().Play ();
 		yield return new WaitForSeconds(1.0f);
 		
 		UICountdown.GetComponentInChildren<Text> ().text = "1";
+		GetComponent<AudioSource>().Play ();
 		yield return new WaitForSeconds(1.0f);
 		
 		UICountdown.GetComponentInChildren<Text> ().text = "GO!";    
