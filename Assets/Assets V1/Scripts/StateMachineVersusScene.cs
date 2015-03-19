@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StateMachineIntro : StateMachineBehaviour 
-{
+public class StateMachineVersusScene : StateMachineBehaviour {
+	public string scene;
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	//override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 	//
@@ -14,13 +14,8 @@ public class StateMachineIntro : StateMachineBehaviour
 	//}
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
-	{
-		GameObject[] guis = GameObject.FindGameObjectsWithTag ("GUI");
-		
-		guis[0].GetComponent<Animator>().enabled = true;
-		guis[1].GetComponent<Animator>().enabled = true;
-
+	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+	Application.LoadLevel (scene);
 	}
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
