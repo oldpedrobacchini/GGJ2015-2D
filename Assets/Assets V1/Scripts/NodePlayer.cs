@@ -29,6 +29,8 @@ public class NodePlayer : Node
 	{
 		GetComponent<AudioSource>().clip = rightSong;
 		GetComponent<AudioSource>().Play ();
+
+		newGreenNode.GetComponent<Rigidbody2D> ().Sleep ();
 		greenNodes.Add(newGreenNode);
 
 		if (tag == "Player1")
@@ -40,7 +42,7 @@ public class NodePlayer : Node
 		newGreenNode.StopUpDown ();
 	}
 	
-	public void removeNode()
+	public void removeNode(Vector2 contactsDiretion)
 	{
 		GetComponent<AudioSource>().clip = wrongSong;
 		GetComponent<AudioSource>().Play ();
@@ -51,6 +53,8 @@ public class NodePlayer : Node
 			greenNodes.RemoveAt (0);
 			removeGreenNode.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
 			removeGreenNode.StopAttract();
+			removeGreenNode.GetComponent<Rigidbody2D>().AddForce(contactsDiretion*500);
+			//StartCoroutine(removeGreenNode.BeginUpDown());
 			removeGreenNode.BeginUpDown();
 		}
 		else
@@ -73,9 +77,8 @@ public class NodePlayer : Node
 			else if (collision.gameObject.tag == "red")
 			{
 				collision.gameObject.GetComponent<NodeElement>().Decrease(10f,Vector3.zero);
-				collision.collider.enabled = false;
-
-				removeNode();
+				collision.gameObject.GetComponent<NodeElement>().StopUpDown();
+				removeNode(collision.contacts[0].normal);
 				StartCoroutine(Utility.InstantiateSignal(redSignalPrefab,gameObject));
 			}
 			numGreenNodes.GetComponent<Text>().text = getNumNodes().ToString();

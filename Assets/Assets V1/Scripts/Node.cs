@@ -43,8 +43,9 @@ public class Node : MonoBehaviour
 		if(tag == "red")
 		{
 			incDec.onFinish = delegate() {
+				gameObject.GetComponent<Collider2D>().enabled = false;
 				Match match = FindObjectOfType<Match>();
-				StartCoroutine(match.newRed(this));
+				StartCoroutine(match.repositionRed((NodeElement)this));
 			};
 		}
 	}

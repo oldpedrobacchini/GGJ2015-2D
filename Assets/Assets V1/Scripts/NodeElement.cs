@@ -20,8 +20,15 @@ public class NodeElement : Node
 	//------ UpDown
 	public void BeginUpDown()
 	{
-		BehaviorUpDown upDown = gameObject.AddComponent<BehaviorUpDown> ();
-		upDown.randomBehavior();
+		if(gameObject.GetComponent<BehaviorUpDown>() == null)
+		{
+			BehaviorUpDown upDown = gameObject.AddComponent<BehaviorUpDown> ();
+			upDown.randomBehavior();
+		}
+		else
+		{
+			Debug.LogError("Error BehaviorUpDown exist in NodeElement");
+		}
 	}
 	
 	public void StopUpDown()

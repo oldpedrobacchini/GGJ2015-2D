@@ -37,12 +37,15 @@ public class Match : MonoBehaviour
 	public AudioClip CountdownEffect;
 	public AudioClip perfectEffect;
 
-	//	private Game game = null;
+	public GameObject redSignalPrefab;
+
+	private Game game = null;
 	
 	void Awake()
 	{
 		//Busca o GameObject Game
-		Game game = FindObjectOfType<Game>();
+		game = FindObjectOfType<Game>();
+
 		//Se nao encontrar cria o objeto
 		if(game==null)
 			game = ((GameObject) Instantiate(Resources.Load("GamePrefab", typeof(GameObject)))).GetComponent<Game>();
@@ -173,7 +176,6 @@ public class Match : MonoBehaviour
 	
 	public void Ideath(string tag)
 	{
-		Game game = FindObjectOfType<Game> ();
 		if(tag == "Player1")
 		{
 			game.addPointPlayer2();
@@ -193,7 +195,6 @@ public class Match : MonoBehaviour
 
 	public void finishMatch(string player)
 	{
-		Game game = FindObjectOfType<Game> ();
 		if (player == "Player1") 
 		{
 			game.addPointPlayer1 ();
@@ -250,16 +251,22 @@ public class Match : MonoBehaviour
 		Application.LoadLevel(Application.loadedLevel);
 	}
 
-	public IEnumerator newRed(Node redNode)
+	public IEnumerator repositionRed(NodeElement redNode)
 	{
 		yield return new WaitForSeconds (2.0f);
 		//Todo arrumar bug dos objetos continuarem a serem criados mesmo depois que o jogo termina
 		// arrumado com essa variavel porem ver uma forma melhor
 		if(!isFinish)
 		{
-//			redNode.gameObject.GetComponent<Collider2D> ().enabled = true;
+			redNode.transform.position = getAvaliablePosition(10f,10f);
+
+			StartCoroutine(Utility.InstantiateSignal(redSignalPrefab,redNode.gameObject));
+			yield return new WaitForSeconds (0.3f);
+			StartCoroutine(Utility.InstantiateSignal(redSignalPrefab,redNode.gameObject));
+			yield return new WaitForSeconds (0.3f);
+
 			redNode.Increase (10f, redNodePrefab.transform.localScale);
-//			Debug.Log ("New redNode: "+redNode.name);
+			redNode.BeginUpDown();
 		}
 	}
 }
