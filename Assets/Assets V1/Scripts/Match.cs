@@ -38,6 +38,7 @@ public class Match : MonoBehaviour
 	public AudioClip perfectEffect;
 
 	public GameObject redSignalPrefab;
+	public GameObject greenSignalPrefab;
 
 	private Game game = null;
 	
@@ -230,7 +231,7 @@ public class Match : MonoBehaviour
 		player1.GetComponent<MovimentPlayer> ().enabled = false;
 		player2.GetComponent<MovimentPlayer> ().enabled = false;
 
-		foreach (NodeElement Node in GameObject.FindObjectsOfType<NodeElement>()) 
+		foreach (NodeElement Node in GameObject.FindObjectsOfType<NodeElement>())
 			Node.StopNodeElement ();
 		
 		if (tag == "Player1") 
@@ -251,22 +252,30 @@ public class Match : MonoBehaviour
 		Application.LoadLevel(Application.loadedLevel);
 	}
 
-	public IEnumerator repositionRed(NodeElement redNode)
+	public IEnumerator repositionNode(NodeElement node)
 	{
 		yield return new WaitForSeconds (2.0f);
 		//Todo arrumar bug dos objetos continuarem a serem criados mesmo depois que o jogo termina
 		// arrumado com essa variavel porem ver uma forma melhor
 		if(!isFinish)
 		{
-			redNode.transform.position = getAvaliablePosition(10f,10f);
+			node.transform.position = getAvaliablePosition(10f,10f);
 
-			StartCoroutine(Utility.InstantiateSignal(redSignalPrefab,redNode.gameObject));
-			yield return new WaitForSeconds (0.3f);
-			StartCoroutine(Utility.InstantiateSignal(redSignalPrefab,redNode.gameObject));
-			yield return new WaitForSeconds (0.3f);
+			int numAlert = 2;
+			for(int i=0; i<numAlert;i++)
+			{
+				if(node.tag == "green")
+					StartCoroutine(Utility.InstantiateSignal(greenSignalPrefab,node.gameObject));
+				else if (node.tag == "red")
+					StartCoroutine(Utility.InstantiateSignal(redSignalPrefab,node.gameObject));
 
-			redNode.Increase (10f, redNodePrefab.transform.localScale);
-			redNode.BeginUpDown();
+				yield return new WaitForSeconds (0.3f);
+			}
+
+			if(node.tag == "green")
+				node.IncreaseElement (60f, greenNodePrefab.transform.localScale);
+			else if (node.tag == "red")
+				node.IncreaseElement (60f, redNodePrefab.transform.localScale);
 		}
 	}
 }

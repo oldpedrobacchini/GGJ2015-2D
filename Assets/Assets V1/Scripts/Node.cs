@@ -4,13 +4,13 @@ using System.Collections;
 public class Node : MonoBehaviour 
 {
 	//---------- Attract
-	public void BeginAttract(GameObject target, float minDistanceAttract, float attractSmoothTime)
+	protected void BeginAttract(GameObject target, float minDistanceAttract, float attractSmoothTime)
 	{
 		BehaviorAttract att = gameObject.AddComponent<BehaviorAttract> ();
 		att.BeginAttract (target, minDistanceAttract, attractSmoothTime);
 	}
 
-	public void StopAttract()
+	protected void StopAttract()
 	{
 		Destroy (GetComponent<BehaviorAttract> ());
 	}
@@ -24,29 +24,34 @@ public class Node : MonoBehaviour
 	}
 
 	//---------- IncreaseDecrease
-	public void Increase(float scaleFator, Vector3 majorScale)
+	protected void Increase(float scaleFator, Vector3 majorScale)
 	{
-		BehaviorIncreaseDecrease incDec = gameObject.AddComponent<BehaviorIncreaseDecrease> ();
-		incDec.Increase (scaleFator, majorScale);
-		if(tag == "red")
+		if(GetComponent<BehaviorIncreaseDecrease>() == null)
 		{
+			BehaviorIncreaseDecrease incDec = gameObject.AddComponent<BehaviorIncreaseDecrease> ();
+			incDec.Increase (scaleFator, majorScale);
+
 			incDec.onFinish = delegate() {
 				gameObject.GetComponent<Collider2D>().enabled = true;
 			};
 		}
+		else
+		{
+			Debug.LogError("Error Increase() failed because BehaviorIncreaseDecrease exist in Node");
+		}
 	}
 
-	public void Decrease(float scaleFator,Vector3 lessScale)
+	protected void Decrease(float scaleFator,Vector3 lessScale)
 	{
-		BehaviorIncreaseDecrease incDec = gameObject.AddComponent<BehaviorIncreaseDecrease> ();
-		incDec.Decrease (scaleFator, lessScale);
-		if(tag == "red")
+		if(GetComponent<BehaviorIncreaseDecrease>() == null)
 		{
-			incDec.onFinish = delegate() {
-				gameObject.GetComponent<Collider2D>().enabled = false;
-				Match match = FindObjectOfType<Match>();
-				StartCoroutine(match.repositionRed((NodeElement)this));
-			};
+			BehaviorIncreaseDecrease incDec = gameObject.AddComponent<BehaviorIncreaseDecrease> ();
+			incDec.Decrease (scaleFator, lessScale);
+			gameObject.GetComponent<Collider2D>().enabled = false;
+		}
+		else
+		{
+			Debug.LogError("Error Decrease() failed because BehaviorIncreaseDecrease exist in Node");
 		}
 	}
 }

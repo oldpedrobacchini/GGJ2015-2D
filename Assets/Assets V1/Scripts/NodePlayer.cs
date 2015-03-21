@@ -38,8 +38,7 @@ public class NodePlayer : Node
 		if (tag == "Player2")
 			newGreenNode.transform.GetChild (0).GetComponent<SpriteRenderer> ().color = Color.cyan;
 
-		newGreenNode.BeginAttract(this.gameObject,Random.Range (3.0f, 5.0f),Random.Range (0.1f, 0.4f));
-		newGreenNode.StopUpDown ();
+		newGreenNode.BeginAttractElement(this.gameObject,Random.Range (3.0f, 5.0f),Random.Range (0.1f, 0.4f));
 	}
 	
 	public void removeNode(Vector2 contactsDiretion)
@@ -52,10 +51,8 @@ public class NodePlayer : Node
 			NodeElement removeGreenNode = greenNodes [0];
 			greenNodes.RemoveAt (0);
 			removeGreenNode.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
-			removeGreenNode.StopAttract();
+			removeGreenNode.StopAttractElement();
 			removeGreenNode.GetComponent<Rigidbody2D>().AddForce(contactsDiretion*500);
-			//StartCoroutine(removeGreenNode.BeginUpDown());
-			removeGreenNode.BeginUpDown();
 		}
 		else
 		{
@@ -76,12 +73,21 @@ public class NodePlayer : Node
 			}
 			else if (collision.gameObject.tag == "red")
 			{
-				collision.gameObject.GetComponent<NodeElement>().Decrease(10f,Vector3.zero);
-				collision.gameObject.GetComponent<NodeElement>().StopUpDown();
+				collision.gameObject.GetComponent<NodeElement>().DecreaseElement(60f,Vector3.zero);
 				removeNode(collision.contacts[0].normal);
 				StartCoroutine(Utility.InstantiateSignal(redSignalPrefab,gameObject));
 			}
 			numGreenNodes.GetComponent<Text>().text = getNumNodes().ToString();
 		}
+	}
+
+	public void DecreasePlayer(float scaleFator,Vector3 lessScale)
+	{
+		Decrease (scaleFator, lessScale);
+	}
+
+	public void BeginAttractPlayer(GameObject target, float minDistanceAttract, float attractSmoothTime)
+	{
+		BeginAttract (target, minDistanceAttract, attractSmoothTime);
 	}
 }
