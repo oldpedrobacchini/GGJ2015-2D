@@ -5,6 +5,23 @@ public class NodeElement : Node
 {
 	public Animator anim;
 
+	private bool inBoundary = true;
+
+	public void ExitBoundary()
+	{
+		inBoundary = false;
+
+		if(!isAttract())
+		{
+			DecreaseElement(60f,Vector3.zero);
+		}
+	}
+
+	public void EnterBoundary()
+	{
+		inBoundary = true;
+	}
+
 	void Start()
 	{
 		anim.speed = Random.Range (1f, 2f);
@@ -64,6 +81,9 @@ public class NodeElement : Node
 	{
 		StopAttract ();
 		BeginUpDown ();
+
+		if(!inBoundary)
+			DecreaseElement(60f,Vector3.zero);
 	}
 
 	public void DecreaseElement(float scaleFator,Vector3 lessScale)
