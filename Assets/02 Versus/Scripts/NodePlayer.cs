@@ -17,6 +17,9 @@ public class NodePlayer : Node
 
 	public CanvasRenderer numGreenNodes;
 
+	public Material playerMaterial;
+	public Material greenMaterial;
+
 	[HideInInspector]
 	public List<NodeElement> greenNodes = new List<NodeElement>();
 
@@ -33,10 +36,10 @@ public class NodePlayer : Node
 		newGreenNode.GetComponent<Rigidbody2D> ().Sleep ();
 		greenNodes.Add(newGreenNode);
 
-		if (tag == "Player1")
-			newGreenNode.transform.GetChild (0).GetComponent<SpriteRenderer> ().color = Color.red;
-		if (tag == "Player2")
-			newGreenNode.transform.GetChild (0).GetComponent<SpriteRenderer> ().color = Color.cyan;
+		foreach(SkinnedMeshRenderer meshRender in newGreenNode.meshRenders)
+		{
+			meshRender.material = playerMaterial;
+		}
 
 		newGreenNode.BeginAttractElement(this.gameObject,Random.Range (3.0f, 5.0f),Random.Range (0.1f, 0.4f));
 	}
@@ -50,7 +53,13 @@ public class NodePlayer : Node
 		{
 			NodeElement removeGreenNode = greenNodes [0];
 			greenNodes.RemoveAt (0);
-			removeGreenNode.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
+
+			foreach(SkinnedMeshRenderer meshRender in removeGreenNode.meshRenders)
+			{
+				meshRender.material = greenMaterial;
+			}
+			//removeGreenNode.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
+
 			removeGreenNode.StopAttractElement();
 			removeGreenNode.GetComponent<Rigidbody2D>().AddForce(contactsDiretion*500);
 		}

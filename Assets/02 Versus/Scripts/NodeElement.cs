@@ -7,6 +7,8 @@ public class NodeElement : Node
 
 	private bool inBoundary = true;
 
+	public SkinnedMeshRenderer[] meshRenders;
+
 	public void ExitBoundary()
 	{
 		inBoundary = false;
@@ -24,7 +26,8 @@ public class NodeElement : Node
 
 	void Start()
 	{
-		anim.speed = Random.Range (1f, 2f);
+		if(anim!=null)
+			anim.speed = Random.Range (1f, 2f);
 		BeginUpDown ();
 	}
 	
