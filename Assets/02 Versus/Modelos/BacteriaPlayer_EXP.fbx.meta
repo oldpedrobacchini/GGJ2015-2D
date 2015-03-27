@@ -1,0 +1,168 @@
+fileFormatVersion: 2
+guid: 5892ed40cabb7124a9f68c7077ac2851
+timeCreated: 1427479127
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: cl_Bacteria
+    100004: g_meshBacteria
+    100006: g_P_jnt_nodes_
+    100008: g_P_jnt_nodes_1
+    100010: g_P_jnt_nodes_2
+    100012: g_P_jnt_nodes_3
+    100014: g_P_jnt_nodes_4
+    100016: jnt_BackteriaPlayer
+    100018: jnt_nodes_
+    100020: jnt_nodes_1
+    100022: jnt_nodes_2
+    100024: jnt_nodes_3
+    100026: jnt_nodes_4
+    100028: meshBacteria
+    100030: meshBacteria1
+    100032: meshBacteria2
+    100034: meshBacteria3
+    400000: //RootNode
+    400002: cl_Bacteria
+    400004: g_meshBacteria
+    400006: g_P_jnt_nodes_
+    400008: g_P_jnt_nodes_1
+    400010: g_P_jnt_nodes_2
+    400012: g_P_jnt_nodes_3
+    400014: g_P_jnt_nodes_4
+    400016: jnt_BackteriaPlayer
+    400018: jnt_nodes_
+    400020: jnt_nodes_1
+    400022: jnt_nodes_2
+    400024: jnt_nodes_3
+    400026: jnt_nodes_4
+    400028: meshBacteria
+    400030: meshBacteria1
+    400032: meshBacteria2
+    400034: meshBacteria3
+    4300000: meshBacteria
+    4300002: meshBacteria1
+    4300004: meshBacteria2
+    4300006: meshBacteria3
+    7400000: Take 001
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: meshBacteria
+    13700002: meshBacteria1
+    13700004: meshBacteria2
+    13700006: meshBacteria3
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 52
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 1
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: cl_Bacteria
+        weight: 1
+      - path: g_meshBacteria
+        weight: 1
+      - path: g_meshBacteria/meshBacteria
+        weight: 1
+      - path: jnt_BackteriaPlayer
+        weight: 1
+      - path: jnt_BackteriaPlayer/g_P_jnt_nodes_
+        weight: 1
+      - path: jnt_BackteriaPlayer/g_P_jnt_nodes_/jnt_nodes_
+        weight: 1
+      - path: jnt_BackteriaPlayer/g_P_jnt_nodes_1
+        weight: 1
+      - path: jnt_BackteriaPlayer/g_P_jnt_nodes_1/jnt_nodes_1
+        weight: 1
+      - path: jnt_BackteriaPlayer/g_P_jnt_nodes_2
+        weight: 1
+      - path: jnt_BackteriaPlayer/g_P_jnt_nodes_2/jnt_nodes_2
+        weight: 1
+      - path: jnt_BackteriaPlayer/g_P_jnt_nodes_3
+        weight: 1
+      - path: jnt_BackteriaPlayer/g_P_jnt_nodes_3/jnt_nodes_3
+        weight: 1
+      - path: jnt_BackteriaPlayer/g_P_jnt_nodes_4
+        weight: 1
+      - path: jnt_BackteriaPlayer/g_P_jnt_nodes_4/jnt_nodes_4
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
