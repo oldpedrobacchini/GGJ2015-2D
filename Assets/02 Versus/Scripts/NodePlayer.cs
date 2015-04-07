@@ -20,6 +20,8 @@ public class NodePlayer : Node
 	public Material playerMaterial;
 	public Material greenMaterial;
 
+	public MatchPoints matchPoints;
+
 	[HideInInspector]
 	public List<NodeElement> greenNodes = new List<NodeElement>();
 
@@ -35,6 +37,8 @@ public class NodePlayer : Node
 
 		newGreenNode.GetComponent<Rigidbody2D> ().Sleep ();
 		greenNodes.Add(newGreenNode);
+
+		matchPoints.UpdatePoints (greenNodes.Count);
 
 		foreach(SkinnedMeshRenderer meshRender in newGreenNode.meshRenders)
 		{
@@ -54,11 +58,12 @@ public class NodePlayer : Node
 			NodeElement removeGreenNode = greenNodes [0];
 			greenNodes.RemoveAt (0);
 
+			matchPoints.UpdatePoints (greenNodes.Count);
+
 			foreach(SkinnedMeshRenderer meshRender in removeGreenNode.meshRenders)
 			{
 				meshRender.material = greenMaterial;
 			}
-			//removeGreenNode.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
 
 			removeGreenNode.StopAttractElement();
 			removeGreenNode.GetComponent<Rigidbody2D>().AddForce(contactsDiretion*500);

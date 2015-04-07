@@ -19,7 +19,7 @@ public class BlackHole : MonoBehaviour
 		{
 			if (other.GetComponent<NodePlayer>().getNumNodes () == 4) 
 			{
-				match.finishMatch(other.tag);
+				match.PlayerWin(other.tag);
 				GetComponent<Collider2D>().enabled = false;
 				StartCoroutine(Utility.InstantiateSignal(lastSignalPrefab,gameObject));
 

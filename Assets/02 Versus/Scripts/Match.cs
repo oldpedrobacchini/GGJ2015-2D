@@ -40,6 +40,8 @@ public class Match : MonoBehaviour
 	public GameObject redSignalPrefab;
 	public GameObject greenSignalPrefab;
 
+	public Sprite[] HUDSprites;
+
 	private Game game = null;
 	
 	void Awake()
@@ -175,7 +177,7 @@ public class Match : MonoBehaviour
 		return new Vector3 (newAvaliable.x,newAvaliable.y, 0);
 	}
 	
-	public void Ideath(string tag)
+	public void Ideath(string tagPlayer)
 	{
 		if(tag == "Player1")
 		{
@@ -194,9 +196,9 @@ public class Match : MonoBehaviour
 		BlackHole.GetComponent<BlackHole>().StopBlackHole();
 	}
 
-	public void finishMatch(string player)
+	public void PlayerWin(string tagPlayer)
 	{
-		if (player == "Player1") 
+		if (tagPlayer == "Player1") 
 		{
 			game.addPointPlayer1 ();
 			winPlayer1.gameObject.SetActive (true);
@@ -208,7 +210,7 @@ public class Match : MonoBehaviour
 				winPlayer1.GetComponentInChildren<Text> ().text = "PERFECT";
 				winPlayer1.GetComponentInChildren<Text> ().fontSize = 66;
 			}
-		} else if (player == "Player2") 
+		} else if (tagPlayer == "Player2") 
 		{
 			game.addPointPlayer2 ();
 			winPlayer2.gameObject.SetActive (true);
