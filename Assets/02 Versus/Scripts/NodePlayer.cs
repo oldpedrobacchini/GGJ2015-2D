@@ -15,8 +15,6 @@ public class NodePlayer : Node
 	public GameObject redSignalPrefab;
 	public GameObject greenSignalPrefab;
 
-	public CanvasRenderer numGreenNodes;
-
 	public Material playerMaterial;
 	public Material greenMaterial;
 
@@ -91,7 +89,6 @@ public class NodePlayer : Node
 				removeNode(collision.contacts[0].normal);
 				StartCoroutine(Utility.InstantiateSignal(redSignalPrefab,gameObject));
 			}
-			numGreenNodes.GetComponent<Text>().text = getNumNodes().ToString();
 		}
 	}
 
