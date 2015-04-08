@@ -179,14 +179,14 @@ public class Match : MonoBehaviour
 	
 	public void Ideath(string tagPlayer)
 	{
-		if(tag == "Player1")
+		if(tagPlayer == "Player1")
 		{
 			game.addPointPlayer2();
 			StartCoroutine (finishLevel("Player2"));
 			winPlayer2.transform.position = new Vector3(player2.transform.position.x+10f,player2.transform.position.y,player2.transform.position.z);                       
 			winPlayer2.gameObject.SetActive (true);
 		}
-		else if(tag == "Player2")
+		else if(tagPlayer == "Player2")
 		{
 			game.addPointPlayer1();
 			StartCoroutine (finishLevel("Player1"));
