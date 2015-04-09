@@ -6,7 +6,7 @@ public class JumpApresentation : MonoBehaviour
 	public Animator cameraAnimator;
 	public Animator tituloAnimator;
 
-	public GameObject[] desactiveGameobjects;
+	public GameObject[] destroyGameobjects;
 
 	void Update () 
 	{
@@ -17,8 +17,8 @@ public class JumpApresentation : MonoBehaviour
 				cameraAnimator.SetTrigger("JumpMenu");
 				tituloAnimator.SetTrigger("JumpMenu");
 
-				foreach(GameObject desactiveGameobject in desactiveGameobjects)
-					desactiveGameobject.SetActive(false);
+				foreach(GameObject destroyGameobject in destroyGameobjects)
+					Destroy(destroyGameobject);
 
 				GameObject[] guis = GameObject.FindGameObjectsWithTag ("GUI");
 
