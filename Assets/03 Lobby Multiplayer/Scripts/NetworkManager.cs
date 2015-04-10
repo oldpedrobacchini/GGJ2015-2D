@@ -88,6 +88,23 @@ public class NetworkManager : MonoBehaviour
 		Network.Connect (hostData);
 	}
 
+	public void Disconnect()
+	{
+		Network.Disconnect();
+		MasterServer.UnregisterHost();
+		UImanager.UpdateUI ();
+	}
+
+	void OnFailedToConnectToMasterServer(NetworkConnectionError info)
+	{
+		Debug.Log (info);
+	}
+	
+	void OnFailedToConnect(NetworkConnectionError info)
+	{
+		Debug.Log (info);
+	}
+
 }
 
 
