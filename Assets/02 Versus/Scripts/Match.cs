@@ -9,7 +9,8 @@ public class Match : MonoBehaviour
 	public GameObject debugPrefab;
 
 	public int limiteX = 24;
-	public int limiteY = 12;
+	public int limiteYSup = 12;
+	public int limiteYInf = 12;
 	
 	public int numRedNode = 10;
 	public int numGreenNode = 10;
@@ -40,6 +41,10 @@ public class Match : MonoBehaviour
 	public GameObject redSignalPrefab;
 	public GameObject greenSignalPrefab;
 
+	public Text timer_tex;
+	private bool isTimer = false;
+	private float timer = 0;
+
 	public Sprite[] HUDSprites;
 
 	private Game game = null;
@@ -56,7 +61,7 @@ public class Match : MonoBehaviour
 		//Cria a lista de posicoes disponiveis para posicionar os elemntos do jogo
 		for (int i=limiteX; i>=-limiteX; i--) 
 		{
-			for (int j=limiteY; j>=-limiteY; j--) 
+			for (int j=limiteYSup; j>=-limiteYInf; j--) 
 			{
 				avaliablePositons.Add(new Vector2(i,j));
 			}
@@ -113,7 +118,10 @@ public class Match : MonoBehaviour
 		
 		UICountdown.GetComponentInChildren<Text> ().text = "GO!";    
 		yield return new WaitForSeconds(0.3f);
-		
+
+		isTimer = true;
+		timer = 0;
+
 		UICountdown.gameObject.SetActive (false);
 		player1.GetComponent<MovimentPlayer> ().enabled = true;
 		player2.GetComponent<MovimentPlayer> ().enabled = true;
@@ -125,6 +133,12 @@ public class Match : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.R)) 
 		{
 			Application.LoadLevel (Application.loadedLevel);
+		}
+
+		if(isTimer)
+		{
+			timer += Time.deltaTime;
+			timer_tex.text = timer.ToString();
 		}
 	}
 	
@@ -151,12 +165,12 @@ public class Match : MonoBehaviour
 		while(startRow<=endRow)
 		{
 			int startCol = ((int)newAvaliable.y - removeY);
-			if (startCol < -limiteY)
-				startCol = -limiteY;
+			if (startCol < -limiteYInf)
+				startCol = -limiteYInf;
 			
 			int endCol = ((int)newAvaliable.y + removeY);
-			if (endCol > limiteY)
-				endCol = limiteY;
+			if (endCol > limiteYSup)
+				endCol = limiteYSup;
 			
 			while(startCol<=endCol)
 			{
@@ -179,6 +193,7 @@ public class Match : MonoBehaviour
 	
 	public void Ideath(string tagPlayer)
 	{
+		isTimer = false;
 		if(tagPlayer == "Player1")
 		{
 			game.addPointPlayer2();
@@ -198,6 +213,7 @@ public class Match : MonoBehaviour
 
 	public void PlayerWin(string tagPlayer)
 	{
+		isTimer = false;
 		if (tagPlayer == "Player1") 
 		{
 			game.addPointPlayer1 ();
