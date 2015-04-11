@@ -7,11 +7,13 @@ public class MatchPoints : MonoBehaviour
 	public Match match;
 	private Image image;
 	private Animator animator;
+	private Color defaultColor;
 
 	void Start()
 	{
 		image = GetComponent<Image> ();
 		animator = GetComponent<Animator> ();
+		defaultColor = image.color;
 	}
 
 	public void UpdatePoints(int points)
@@ -25,6 +27,7 @@ public class MatchPoints : MonoBehaviour
 		else
 		{
 			animator.enabled = false;
+			image.color = defaultColor;
 		}
 	}
 }

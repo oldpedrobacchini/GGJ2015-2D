@@ -16,7 +16,12 @@ public class NetworkManager : MonoBehaviour
 
 	public UINetworkManager UImanager;
 
-	private HostData[] hostData;
+	public GameObject refreshSprite;
+
+	void Start()
+	{
+		RefreshHostsList ();
+	}
 
 	public void StartServer(string roomName)
 	{
@@ -55,9 +60,10 @@ public class NetworkManager : MonoBehaviour
 
 		if(msEvent == MasterServerEvent.HostListReceived)
 		{
-			hostData = MasterServer.PollHostList();
+			refreshSprite.SetActive (false);
+			HostData[] hostData = MasterServer.PollHostList();
 
-			Debug.Log(hostData.Length);
+//			Debug.Log(hostData.Length);
 
 			for (int i = 0; i < hostData.Length; i++)
 			{
@@ -78,8 +84,9 @@ public class NetworkManager : MonoBehaviour
 
 	public void RefreshHostsList()
 	{
-		Debug.Log("Refreshing");
+//		Debug.Log("Refreshing");
 		MasterServer.RequestHostList(gameName);
+		refreshSprite.SetActive (true);
 	}
 
 	public void NetworkConected(HostData hostData)
@@ -93,6 +100,13 @@ public class NetworkManager : MonoBehaviour
 		Network.Disconnect();
 		MasterServer.UnregisterHost();
 		UImanager.UpdateUI ();
+	}
+
+	void OnPlayerDisconnected(NetworkPlayer player) 
+	{
+		Debug.Log("Clean up after player " + player);
+		//Network.RemoveRPCs(player);
+		//Network.DestroyPlayerObjects(player);
 	}
 
 	void OnFailedToConnectToMasterServer(NetworkConnectionError info)
