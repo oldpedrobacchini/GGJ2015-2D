@@ -7,12 +7,17 @@ public class MovimentPlayer : MonoBehaviour
 	
 	public string controlVertical = "VerticalP1";
 	public string controlHorizontal = "HorizontalP1";
+	public GameObject giraContorno;
+	public float speedGiro = 500f;
+
 
 	Vector2 speedMagnetic;
 
 	// Update is called once per frame	
 	void Update () 
 	{
+		giraContorno.transform.Rotate (new Vector3(0,0, Time.deltaTime*speedGiro));
+
 		Vector3 newPosition = transform.position;
 
 		if (Input.GetButton (controlHorizontal)) 
