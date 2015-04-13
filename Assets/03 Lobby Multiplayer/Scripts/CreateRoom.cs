@@ -5,11 +5,12 @@ using UnityEngine.UI;
 public class CreateRoom : MonoBehaviour 
 {
 	public NetworkManager networkManager;
-	public InputField inputField;
+	public InputField roomNameField;
+	public InputField roomPortField;
 
 	// Use this for initialization
 	public void StartServer () 
 	{
-		networkManager.StartServer (inputField.text);
+		networkManager.StartServer (roomNameField.text, int.Parse(roomPortField.text));
 	}
 }

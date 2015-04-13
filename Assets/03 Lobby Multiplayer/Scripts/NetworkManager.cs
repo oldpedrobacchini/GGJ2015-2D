@@ -23,7 +23,7 @@ public class NetworkManager : MonoBehaviour
 		RefreshHostsList ();
 	}
 
-	public void StartServer(string roomName)
+	public void StartServer(string roomName, int serverPort)
 	{
 		Debug.Log("Starting Server");
 		bool useNat = Network.HavePublicAddress();
@@ -60,18 +60,38 @@ public class NetworkManager : MonoBehaviour
 
 		if(msEvent == MasterServerEvent.HostListReceived)
 		{
-			refreshSprite.SetActive (false);
 			HostData[] hostData = MasterServer.PollHostList();
-
-//			Debug.Log(hostData.Length);
+			ServerInfo[] serversInfo = FindObjectsOfType<ServerInfo>();
 
 			for (int i = 0; i < hostData.Length; i++)
 			{
+
+				bool findHostData = false;
+
+				for(int j = 0; j<serversInfo.Length;j++)
+				{
+					if(serversInfo[j] != null)
+					{
+						if(serversInfo[j].hostData.guid == hostData[i].guid)
+						{
+							findHostData = true;
+							serversInfo.SetValue(null,j);
+							break;
+						}
+					}
+				}
+
+				if(findHostData)
+				{
+					findHostData = false;
+					continue;
+				}
+
 				Debug.Log("Game name: " + hostData[i].gameName);
 				GameObject buttonServer = GameObject.Instantiate (serverButton);
 				
 				buttonServer.transform.SetParent(LobbyRooms);
-				buttonServer.GetComponent<RectTransform>().anchoredPosition = new Vector2(10,-10);
+				buttonServer.transform.localScale = Vector3.one;
 				buttonServer.transform.GetChild(0).GetComponent<Text>().text = hostData[i].gameName;
 				buttonServer.GetComponent<ServerInfo>().hostData = hostData[i];
 				
@@ -79,6 +99,25 @@ public class NetworkManager : MonoBehaviour
 					NetworkConected(buttonServer.GetComponent<ServerInfo>().hostData);
 				});
 			}
+
+			if(hostData.Length == 0)
+			{
+				for(int j = 0; j<serversInfo.Length;j++)
+				{
+					Destroy(serversInfo[j].gameObject);
+				}
+			}
+			else
+			{
+				for(int j = 0; j<serversInfo.Length;j++)
+				{
+					if(serversInfo[j] != null)
+					{
+						Destroy(serversInfo[j].gameObject);
+					}
+				}
+			}
+			refreshSprite.SetActive (false);
 		}
 	}
 
@@ -116,7 +155,9 @@ public class NetworkManager : MonoBehaviour
 	
 	void OnFailedToConnect(NetworkConnectionError info)
 	{
+		Debug.Log ("Sala Provalvelmente nao existe mais");
 		Debug.Log (info);
+		RefreshHostsList ();
 	}
 
 }
