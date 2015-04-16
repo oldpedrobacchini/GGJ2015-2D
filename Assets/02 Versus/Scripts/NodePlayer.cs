@@ -74,7 +74,7 @@ public class NodePlayer : Node
 
 	void OnCollisionEnter2D(Collision2D collision) 
 	{
-		if (collision.gameObject.tag == "green" || collision.gameObject.tag == "red") 
+		if (collision.gameObject.tag == "green" || collision.gameObject.tag == "red" || collision.gameObject.tag == "PowerUp") 
 		{	
 			if (collision.gameObject.tag == "green" && 
 			    getNumNodes() < Game.MAX_NUMBER_GREEN && 
@@ -88,6 +88,14 @@ public class NodePlayer : Node
 				collision.gameObject.GetComponent<NodeElement>().DecreaseElement(60f,Vector3.zero);
 				removeNode(collision.contacts[0].normal);
 				StartCoroutine(Utility.InstantiateSignal(redSignalPrefab,gameObject));
+			}
+			else if (collision.gameObject.tag == "PowerUp")
+			{
+				Debug.Log("Tirou todos os Nodes Verdes do oponente");
+				removeNode(collision.contacts[0].normal);
+				removeNode(collision.contacts[1].normal);
+				removeNode(collision.contacts[2].normal);
+				removeNode(collision.contacts[3].normal);
 			}
 		}
 	}
