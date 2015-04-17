@@ -21,7 +21,9 @@ public class Match : MonoBehaviour
 	public GameObject winPlayer2;
 	
 	public GameObject player1;
+	public int indiceSkinPlayer1;
 	public GameObject player2;
+	public int indiceSkinPlayer2;
 
 	public GameObject BlackHole;
 	
@@ -47,6 +49,8 @@ public class Match : MonoBehaviour
 
 	public Sprite[] HUDSprites;
 
+	public GameObject[] SkinsPrefabs;
+
 	private Game game = null;
 	
 	void Awake()
@@ -69,11 +73,20 @@ public class Match : MonoBehaviour
 		
 		//Seta a posicao do black hole 
 		BlackHole.transform.position = getAvaliablePosition (30f,30f);
-		
+
+		GameObject skin;
+
 		//Seta a posicao do Jogador 1
 		player1.transform.position = getAvaliablePosition (30f,30f);
+		skin = GameObject.Instantiate (SkinsPrefabs [indiceSkinPlayer1], player1.transform.position, Quaternion.identity) as GameObject;
+		skin.transform.SetParent (player1.transform);
+		skin.GetComponent<ConfigurationSkinPlayer> ().UpdateSkinPlayer (ConfigurationSkinPlayer.playerType.Player1);
+
 		//Seta a posicao do Jogador 2
 		player2.transform.position = getAvaliablePosition (30f,30f);
+		skin = GameObject.Instantiate (SkinsPrefabs [indiceSkinPlayer2], player2.transform.position, Quaternion.identity) as GameObject;
+		skin.transform.SetParent (player2.transform);
+		skin.GetComponent<ConfigurationSkinPlayer> ().UpdateSkinPlayer (ConfigurationSkinPlayer.playerType.Player2);
 		
 		//Cria os nos vermelhos
 		for (int i=0; i<numRedNode; i++) 
