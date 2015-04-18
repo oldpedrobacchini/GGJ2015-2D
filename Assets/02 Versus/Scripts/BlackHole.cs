@@ -7,6 +7,7 @@ public class BlackHole : MonoBehaviour
 	public GameObject lastSignalPrefab;
 	public BehaviorUpDown[] moviments;
 
+	//Todo remover esse metodo Stop Back Hole ou reavaliar ele apos mudancas no buraco negro
 	public void StopBlackHole()
 	{
 		foreach (BehaviorUpDown moviment in moviments)

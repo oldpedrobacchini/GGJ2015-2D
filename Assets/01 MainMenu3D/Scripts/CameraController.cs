@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class JumpApresentation : MonoBehaviour 
+public class CameraController : MonoBehaviour 
 {
 	public Animator cameraAnimator;
 	public Animator tituloAnimator;
 
 	public GameObject[] destroyGameobjects;
+	private string sceneName;
 
 	void Update () 
 	{
@@ -26,5 +27,16 @@ public class JumpApresentation : MonoBehaviour
 				guis[1].GetComponent<Animator>().enabled = true;
 			}
 		}
+	}
+
+	public void InToScren(string sceneName)
+	{
+		cameraAnimator.SetTrigger("InToScren");
+		this.sceneName = sceneName;
+	}
+
+	void OnInToScreenFinish()
+	{
+		Application.LoadLevel (sceneName);
 	}
 }

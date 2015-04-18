@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 [ExecuteInEditMode]
 public class ConfigurationSkinPlayer : MonoBehaviour 
@@ -23,7 +26,7 @@ public class ConfigurationSkinPlayer : MonoBehaviour
 		if(type == playerType.Player1)
 		{
 			sprite.color = ColorPlayer1;
-
+			#if UNITY_EDITOR
 			SerializedObject so = new SerializedObject(trailRenderer);
 			so.FindProperty("m_Colors.m_Color[0]").colorValue = ColorsTrailRendererPlayer1[0];
 			so.FindProperty("m_Colors.m_Color[1]").colorValue = ColorsTrailRendererPlayer1[1];
@@ -31,11 +34,12 @@ public class ConfigurationSkinPlayer : MonoBehaviour
 			so.FindProperty("m_Colors.m_Color[3]").colorValue = ColorsTrailRendererPlayer1[3];
 			so.FindProperty("m_Colors.m_Color[4]").colorValue = ColorsTrailRendererPlayer1[4];
 			so.ApplyModifiedProperties();
+			#endif
 		}
 		else if(type == playerType.Player2)
 		{
 			sprite.color = ColorPlayer2;
-
+			#if UNITY_EDITOR
 			SerializedObject so = new SerializedObject(trailRenderer);
 			
 			so.FindProperty("m_Colors.m_Color[0]").colorValue = ColorsTrailRendererPlayer2[0];
@@ -44,6 +48,7 @@ public class ConfigurationSkinPlayer : MonoBehaviour
 			so.FindProperty("m_Colors.m_Color[3]").colorValue = ColorsTrailRendererPlayer2[3];
 			so.FindProperty("m_Colors.m_Color[4]").colorValue = ColorsTrailRendererPlayer2[4];
 			so.ApplyModifiedProperties();
+			#endif
 		}
 	}
 

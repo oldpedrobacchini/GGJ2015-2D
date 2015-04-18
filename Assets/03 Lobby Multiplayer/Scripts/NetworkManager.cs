@@ -4,9 +4,6 @@ using UnityEngine.UI;
 
 public class NetworkManager : MonoBehaviour 
 {
-	public GameObject player1Prefab;
-	public GameObject player2Prefab;
-
 	public string gameName = "Pedro_Bacchini_Estudo_Network_01";
 	public int serverPort = 25001;
 	public GameObject serverButton;
@@ -17,6 +14,13 @@ public class NetworkManager : MonoBehaviour
 	public UINetworkManager UImanager;
 
 	public GameObject refreshSprite;
+	public GameObject refreshButton;
+
+	public GameObject Player1;
+	public GameObject Player2;
+
+	public GameObject ButtonReadyPlayer1;
+	public GameObject ButtonReadyPlayer2;
 
 	void Start()
 	{
@@ -41,14 +45,26 @@ public class NetworkManager : MonoBehaviour
 	{
 		Debug.Log("Server initialized and ready");
 		UImanager.UpdateUI ();
-		spawnPlayer (player1Prefab);
+
+		Player2.SetActive (false);
+		ButtonReadyPlayer2.SetActive (false);
+		ButtonReadyPlayer2.GetComponent<Button> ().enabled = false;
+
+		ButtonReadyPlayer1.GetComponent<Button> ().enabled = true;
+		ButtonReadyPlayer1.GetComponent<Image> ().color = Color.white;
 	}
 
 	void OnConnectedToServer()
 	{
 		Debug.Log("Server Joined");
 		UImanager.UpdateUI ();
-		spawnPlayer (player2Prefab);
+
+		Player2.SetActive (true);
+		ButtonReadyPlayer2.SetActive (true);
+		ButtonReadyPlayer2.GetComponent<Button> ().enabled = true;
+
+		ButtonReadyPlayer1.GetComponent<Button> ().enabled = false;
+		ButtonReadyPlayer1.GetComponent<Image> ().color = new Color (200f/255f, 200f/255f, 200f/255f, 128f/255f);
 	}
 
 	void OnMasterServerEvent(MasterServerEvent msEvent) 
@@ -118,14 +134,16 @@ public class NetworkManager : MonoBehaviour
 				}
 			}
 			refreshSprite.SetActive (false);
+			refreshButton.SetActive (true);
 		}
 	}
 
 	public void RefreshHostsList()
 	{
-//		Debug.Log("Refreshing");
+		Debug.Log("Refreshing");
 		MasterServer.RequestHostList(gameName);
 		refreshSprite.SetActive (true);
+		refreshButton.SetActive (false);
 	}
 
 	public void NetworkConected(HostData hostData)
@@ -141,13 +159,33 @@ public class NetworkManager : MonoBehaviour
 		UImanager.UpdateUI ();
 	}
 
+	void OnPlayerConnected(NetworkPlayer player) 
+	{
+		Debug.Log("Player connected from " + player.ipAddress + ":" + player.port);
+		Player2.SetActive (true);
+		ButtonReadyPlayer2.SetActive (true);
+	}
+
 	void OnPlayerDisconnected(NetworkPlayer player) 
 	{
 		Debug.Log("Clean up after player " + player);
+		Player2.SetActive (false);
+		ButtonReadyPlayer2.SetActive (false);
 		//Network.RemoveRPCs(player);
 		//Network.DestroyPlayerObjects(player);
 	}
 
+	void OnDisconnectedFromServer(NetworkDisconnection info) 
+	{
+		if (Network.isServer)
+			Debug.Log("Local server connection disconnected");
+		else
+			if (info == NetworkDisconnection.LostConnection)
+				Debug.Log("Lost connection to the server");
+		else
+			Debug.Log("Successfully diconnected from the server");
+	}
+	
 	void OnFailedToConnectToMasterServer(NetworkConnectionError info)
 	{
 		Debug.Log (info);

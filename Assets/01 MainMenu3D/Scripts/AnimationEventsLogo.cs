@@ -3,11 +3,11 @@ using System.Collections;
 
 public class AnimationEventsLogo : MonoBehaviour 
 {
-	public JumpApresentation jumpApresentation;
+	public CameraController cameraController;
 
 	public void FinishAnimation () 
 	{
-		jumpApresentation.enabled = true;
+		cameraController.enabled = true;
 		Destroy (gameObject);
 	}
 }
