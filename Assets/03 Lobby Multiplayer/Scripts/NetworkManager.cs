@@ -27,15 +27,6 @@ public class NetworkManager : MonoBehaviour
 		RefreshHostsList ();
 	}
 
-	public void StartServer(string roomName, int serverPort)
-	{
-		Debug.Log("Starting Server");
-		bool useNat = Network.HavePublicAddress();
-		Debug.Log("HavePublicAddress: "+useNat);
-		Network.InitializeServer(32, serverPort, !useNat);
-		MasterServer.RegisterHost(gameName,roomName,"Esse e o primeiro estudo de Network com Unity3D");
-	}
-
 	void spawnPlayer(GameObject playerPrefab)
 	{
 		Network.Instantiate (playerPrefab, playerPrefab.transform.position, playerPrefab.transform.rotation, 0);
@@ -138,27 +129,6 @@ public class NetworkManager : MonoBehaviour
 		}
 	}
 
-	public void RefreshHostsList()
-	{
-		Debug.Log("Refreshing");
-		MasterServer.RequestHostList(gameName);
-		refreshSprite.SetActive (true);
-		refreshButton.SetActive (false);
-	}
-
-	public void NetworkConected(HostData hostData)
-	{
-		Debug.Log("Connect in "+hostData.gameName);
-		Network.Connect (hostData);
-	}
-
-	public void Disconnect()
-	{
-		Network.Disconnect();
-		MasterServer.UnregisterHost();
-		UImanager.UpdateUI ();
-	}
-
 	void OnPlayerConnected(NetworkPlayer player) 
 	{
 		Debug.Log("Player connected from " + player.ipAddress + ":" + player.port);
@@ -183,7 +153,9 @@ public class NetworkManager : MonoBehaviour
 			if (info == NetworkDisconnection.LostConnection)
 				Debug.Log("Lost connection to the server");
 		else
+		{
 			Debug.Log("Successfully diconnected from the server");
+		}
 	}
 	
 	void OnFailedToConnectToMasterServer(NetworkConnectionError info)
@@ -198,6 +170,39 @@ public class NetworkManager : MonoBehaviour
 		RefreshHostsList ();
 	}
 
+	public void StartServer(string roomName, int serverPort)
+	{
+		Debug.Log("Starting Server");
+		bool useNat = Network.HavePublicAddress();
+		Debug.Log("HavePublicAddress: "+useNat);
+		Network.InitializeServer(2, serverPort, !useNat);
+		MasterServer.RegisterHost(gameName,roomName,"Esse e o primeiro estudo de Network com Unity3D");
+	}
+
+	public void NetworkConected(HostData hostData)
+	{
+		Debug.Log("Connect in "+hostData.gameName);
+		Network.Connect (hostData);
+	}
+
+	public void RefreshHostsList()
+	{
+		Debug.Log("Refreshing");
+		MasterServer.RequestHostList(gameName);
+		refreshSprite.SetActive (true);
+		refreshButton.SetActive (false);
+	}
+	
+	public void Disconnect()
+	{
+		if (ButtonReadyPlayer2.GetComponent<ReadyButtonPlayer2> ().getMyState () == ReadyButtonPlayer2.state.cancel) 
+		{
+			ButtonReadyPlayer2.GetComponent<ReadyButtonPlayer2> ().OnClick ();
+		}
+		Network.Disconnect();
+		MasterServer.UnregisterHost();
+		UImanager.UpdateUI ();
+	}
 }
 
 
