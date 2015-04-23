@@ -8,7 +8,6 @@ public class MovimentPlayer : MonoBehaviour
 	public string controlVertical = "VerticalP1";
 	public string controlHorizontal = "HorizontalP1";
 
-
 	Vector2 speedMagnetic;
 
 	// Update is called once per frame	

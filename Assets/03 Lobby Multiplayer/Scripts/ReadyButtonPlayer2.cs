@@ -2,22 +2,23 @@
 using System.Collections;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(NetworkView))]
 public class ReadyButtonPlayer2 : MonoBehaviour 
 {
 	public enum state {ready,cancel};
 
 	state myState = state.ready;
-
-	private string LabelReady;
+	string LabelReady;
+	NetworkView _networkView;
 
 	public Text LabelButton;
 	public string LabelCancel;
-
-	public ReadyButtonPlayer1 readyButtonPlayer1;
+	public ReadyButtonPlayer1 readyButtonPlayer1; 
 
 	void Start()
 	{
 		LabelReady = LabelButton.text;
+		_networkView = GetComponent<NetworkView> ();
 	}
 
 	public state getMyState()
@@ -30,12 +31,12 @@ public class ReadyButtonPlayer2 : MonoBehaviour
 		if (myState == state.ready) 
 		{
 			myState = state.cancel;
-			GetComponent<NetworkView> ().RPC ("ClickNetwork", RPCMode.AllBuffered, 1);
+			_networkView.RPC ("ClickNetwork", RPCMode.AllBuffered, 1);
 		}
 		else if(myState == state.cancel)
 		{
 			myState = state.ready;
-			GetComponent<NetworkView> ().RPC ("ClickNetwork", RPCMode.AllBuffered, 2);
+			_networkView.RPC ("ClickNetwork", RPCMode.AllBuffered, 2);
 		}
 	}
 
@@ -61,8 +62,5 @@ public class ReadyButtonPlayer2 : MonoBehaviour
 				readyButtonPlayer1.SetActive(false);
 			}
 		}
-
 	}
-
-
 }

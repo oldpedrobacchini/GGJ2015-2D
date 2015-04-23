@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Game : MonoBehaviour {
-
-	public AudioClip finishLevel;
-
+public class Game : MonoBehaviour 
+{
 	int pointsPlayer1 = 0;
 	int pointsPlayer2 = 0;
 
