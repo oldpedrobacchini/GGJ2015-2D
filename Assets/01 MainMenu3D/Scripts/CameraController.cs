@@ -35,6 +35,11 @@ public class CameraController : MonoBehaviour
 		this.sceneName = sceneName;
 	}
 
+	public void InToAbout(bool isAbout)
+	{
+		cameraAnimator.SetBool(“InToAbout”,isAbout);
+	}
+
 	void OnInToScreenFinish()
 	{
 		Application.LoadLevel (sceneName);
