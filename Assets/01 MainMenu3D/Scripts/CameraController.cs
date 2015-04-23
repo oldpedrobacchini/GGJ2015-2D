@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour
 
 	public void InToAbout(bool isAbout)
 	{
-		cameraAnimator.SetBool(“InToAbout”,isAbout);
+		cameraAnimator.SetBool("InToAbout",isAbout);
 	}
 
 	void OnInToScreenFinish()
