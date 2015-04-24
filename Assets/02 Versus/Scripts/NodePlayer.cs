@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class NodePlayer : Node
 {
-	public AudioClip rightSong;
-	public AudioClip wrongSong;
+	public AudioClip greenEffect;
+	public AudioClip redEffect;
+
+	public AudioSource audioSource;
 	
 	public NetworkPlayer netPlayer;
 
@@ -30,8 +32,8 @@ public class NodePlayer : Node
 
 	public void addNode(NodeElement newGreenNode)
 	{
-		GetComponent<AudioSource>().clip = rightSong;
-		GetComponent<AudioSource>().Play ();
+		audioSource.clip = greenEffect;
+		audioSource.Play ();
 
 		newGreenNode.GetComponent<Rigidbody2D> ().Sleep ();
 		greenNodes.Add(newGreenNode);
@@ -48,8 +50,8 @@ public class NodePlayer : Node
 	
 	public void removeNode(Vector2 contactsDiretion)
 	{
-		GetComponent<AudioSource>().clip = wrongSong;
-		GetComponent<AudioSource>().Play ();
+		audioSource.clip = redEffect;
+		audioSource.Play ();
 
 		if (getNumNodes () > 0) 
 		{

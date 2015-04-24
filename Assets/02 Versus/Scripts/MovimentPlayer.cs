@@ -3,6 +3,8 @@ using System.Collections;
 
 public class MovimentPlayer : MonoBehaviour 
 {
+	public AudioSource audioSource;
+
 	public float speed = 20f;
 	
 	public string controlVertical = "VerticalP1";
@@ -44,11 +46,27 @@ public class MovimentPlayer : MonoBehaviour
 
 			newPosition = Camera.main.ScreenToWorldPoint(touchPos);
 
+//			Debug.Log(Vector3.Distance(gameObject.transform.position,newPosition));
+
+			if(Vector3.Distance(gameObject.transform.position,newPosition) > 10.1)
+			{
+				if(!audioSource.isPlaying)
+					audioSource.Play ();
+			}
+			else
+			{
+				audioSource.Stop();
+			}
+
 			float newPositionX = Mathf.SmoothDamp(gameObject.transform.position.x, newPosition.x,ref speedMagnetic.x, 0.2f);
 			float newPositionY = Mathf.SmoothDamp(gameObject.transform.position.y, newPosition.y,ref speedMagnetic.y, 0.2f);	
 
 			transform.position = new Vector3(newPositionX,newPositionY,transform.position.z);
-		} 
+		}
+		else
+		{
+			audioSource.Stop();
+		}
 	}
 
 	public float InputControl(string Control,float originalPosition)

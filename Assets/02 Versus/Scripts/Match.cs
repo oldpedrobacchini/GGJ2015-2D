@@ -39,6 +39,9 @@ public class Match : MonoBehaviour
 
 	public AudioClip CountdownEffect;
 	public AudioClip perfectEffect;
+	public AudioClip winEffect;
+
+	AudioSource audioSource;
 
 	public GameObject redSignalPrefab;
 	public GameObject greenSignalPrefab;
@@ -55,6 +58,8 @@ public class Match : MonoBehaviour
 	
 	void Awake()
 	{
+		audioSource = GetComponent<AudioSource> ();
+
 		//Busca o GameObject Game
 		game = FindObjectOfType<Game>();
 
@@ -115,18 +120,18 @@ public class Match : MonoBehaviour
 	// Chamar essa funcao para mostrar a contagem regressiva no comeco do jogo
 	IEnumerator getReady ()    
 	{	
-		GetComponent<AudioSource>().clip = CountdownEffect;
+		audioSource.clip = CountdownEffect;
 
 		UICountdown.GetComponentInChildren<Text> ().text = "3";
-		GetComponent<AudioSource>().Play ();
+		audioSource.Play ();
 		yield return new WaitForSeconds(1.0f);
 		
 		UICountdown.GetComponentInChildren<Text> ().text = "2";
-		GetComponent<AudioSource>().Play ();
+		//audioSource.Play ();
 		yield return new WaitForSeconds(1.0f);
 		
 		UICountdown.GetComponentInChildren<Text> ().text = "1";
-		GetComponent<AudioSource>().Play ();
+		//audioSource.Play ();
 		yield return new WaitForSeconds(1.0f);
 		
 		UICountdown.GetComponentInChildren<Text> ().text = "GO!";    
@@ -222,6 +227,9 @@ public class Match : MonoBehaviour
 			winPlayer1.gameObject.SetActive (true);
 		}
 		BlackHole.GetComponent<BlackHole>().StopBlackHole();
+
+		audioSource.clip = winEffect;
+		audioSource.Play ();
 	}
 
 	public void PlayerWin(string tagPlayer)
@@ -234,10 +242,15 @@ public class Match : MonoBehaviour
 			//Perfect
 			if(player2.GetComponent<NodePlayer>().getNumNodes() == 0)
 			{
-				GetComponent<AudioSource>().clip = perfectEffect;
-				GetComponent<AudioSource>().Play ();
+				audioSource.clip = perfectEffect;
+				audioSource.Play ();
 				winPlayer1.GetComponentInChildren<Text> ().text = "PERFECT";
 				winPlayer1.GetComponentInChildren<Text> ().fontSize = 66;
+			}
+			else
+			{
+				audioSource.clip = winEffect;
+				audioSource.Play ();
 			}
 		} else if (tagPlayer == "Player2") 
 		{
@@ -246,10 +259,15 @@ public class Match : MonoBehaviour
 			//Perfect
 			if(player1.GetComponent<NodePlayer>().getNumNodes() == 0)
 			{
-				GetComponent<AudioSource>().clip = perfectEffect;
-				GetComponent<AudioSource>().Play ();
+				audioSource.clip = perfectEffect;
+				audioSource.Play ();
 				winPlayer2.GetComponentInChildren<Text> ().text = "PERFECT";
 				winPlayer2.GetComponentInChildren<Text> ().fontSize = 66;
+			}
+			else
+			{
+				audioSource.clip = winEffect;
+				audioSource.Play ();
 			}
 		}
 		StartCoroutine (finishLevel("BlackHole"));

@@ -20,6 +20,8 @@ public class BlackHole : MonoBehaviour
 		{
 			if (other.GetComponent<NodePlayer>().getNumNodes () == 4) 
 			{
+				GetComponent<AudioSource>().Play ();
+
 				match.PlayerWin(other.tag);
 				GetComponent<Collider2D>().enabled = false;
 				StartCoroutine(Utility.InstantiateSignal(lastSignalPrefab,gameObject));
