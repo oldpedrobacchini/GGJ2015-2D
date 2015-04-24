@@ -23,10 +23,18 @@ public class CameraController : MonoBehaviour
 
 				GameObject[] guis = GameObject.FindGameObjectsWithTag ("GUI");
 
-				guis[0].GetComponent<Animator>().enabled = true;
-				guis[1].GetComponent<Animator>().enabled = true;
+				guis[0].GetComponent<AnimationShowOrHide>().Show();
+				guis[1].GetComponent<AnimationShowOrHide>().Show();
 			}
 		}
+	}
+
+	public void OnExitAnimationCameraNomes()
+	{
+		GameObject[] guis = GameObject.FindGameObjectsWithTag ("GUI");
+
+		guis[0].GetComponent<AnimationShowOrHide>().Show();
+		guis[1].GetComponent<AnimationShowOrHide>().Show();
 	}
 
 	public void InToScren(string sceneName)
